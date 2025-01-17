@@ -1,5 +1,5 @@
 import { initializeApp, getApp } from 'firebase/app'
-import { FIREBASE_CONFIG } from '@/app/constants/config'
+import { FIREBASE_CONFIG } from '@/constants/config'
 import { getFirestore } from 'firebase/firestore'
 
 export const setup = () => {

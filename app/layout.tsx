@@ -1,4 +1,4 @@
-import './globals.css'
+import '@/styles/globals.css'
 
 export default function RootLayout({
   children,
@@ -7,7 +7,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="zh-Hant">
-      <body>
+      <body className="border-black bg-background-gray border-[3px]">
         <main>{children}</main>
       </body>
     </html>

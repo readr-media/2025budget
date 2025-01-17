@@ -6,16 +6,20 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    colors: {
-      blue: '#1fb6ff',
-      purple: '#7e5bef',
-      pink: '#ff49db',
-      orange: '#ff7849',
-      green: '#13ce66',
-      yellow: '#ffc82c',
-      'gray-dark': '#273444',
-      gray: '#8492a6',
-      'gray-light': '#d3dce6',
+    screens: {
+      sm: '768px',
+      md: '960px',
+      lg: '1200px',
+      xl: '1440px',
+      xxl: '1920px',
+    },
+
+    extend: {
+      colors: {
+        'background-gray': '#EDEDED',
+        'custom-blue': '#3E51FF',
+        'custom-red': '#D18081',
+      },
     },
     fontFamily: {
       sans: ['Graphik', 'sans-serif'],

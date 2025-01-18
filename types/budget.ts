@@ -11,3 +11,7 @@ export type BudgetData = {
   url: string
   totalReaction: number
 }
+
+export type CategoryData = {
+  [key: string]: string[]
+}

@@ -1,6 +1,6 @@
 import useInView from '@/hooks/use-in-view'
 import { BudgetData } from '@/types/budget'
-import { useEffect } from 'react'
+import { ForwardedRef, forwardRef, useEffect, useState } from 'react'
 
 export default function DesktopBudgetTable({
   list,
@@ -43,24 +43,41 @@ export default function DesktopBudgetTable({
       </thead>
       <tbody>
         {list.map((item, i) => (
-          <tr
+          <DesktopBudgetRow
             key={item.ID}
-            className="border-t border-black py-4"
+            item={item}
             ref={i === list.length - 1 ? targetRef : undefined}
-          >
-            <td className="py-4 align-top">{item.ID}</td>
-            <td className="py-4 pr-[28px] align-top">{item.full_name}</td>
-            <td className="py-4 pr-[21px] align-top">{item.time_place}</td>
-            <td className="py-4 pr-[14px] align-top">{item.who}</td>
-            <td className="py-4 align-top">{item.action}</td>
-            <td className="py-4 align-top">{item.result}</td>
-            <td className="py-4 pr-[23px] align-top">{item.content}</td>
-            <td className="py-4 align-top">{item.cost}</td>
-            <td className="py-4 align-top">{item.totalReaction}</td>
-            <td className="py-4 align-top">⭐</td>
-          </tr>
+          />
         ))}
       </tbody>
     </table>
   )
 }
+
+const DesktopBudgetRow = forwardRef(
+  ({ item }: { item: BudgetData }, ref: ForwardedRef<HTMLTableRowElement>) => {
+    const [isExpanding, setIsExpanding] = useState(false)
+    return (
+      <tr className="border-t border-black py-4" ref={ref}>
+        <td className="py-4 align-top">{item.ID}</td>
+        <td className="py-4 pr-[28px] align-top">{item.full_name}</td>
+        <td className="py-4 pr-[21px] align-top">{item.time_place}</td>
+        <td className="py-4 pr-[14px] align-top">{item.who}</td>
+        <td className="py-4 align-top">{item.action}</td>
+        <td className="py-4 align-top">{item.result}</td>
+        <td
+          className={`cursor-pointer pr-[23px] align-top ${isExpanding ? 'py-4' : 'my-4 line-clamp-3 overflow-hidden'}`}
+          onClick={() => {
+            setIsExpanding(!isExpanding)
+          }}
+        >
+          {item.content}
+        </td>
+        <td className="py-4 align-top">{item.cost}</td>
+        <td className="py-4 align-top">{item.totalReaction}</td>
+        <td className="py-4 align-top">⭐</td>
+      </tr>
+    )
+  }
+)
+DesktopBudgetRow.displayName = 'DesktopBudgetRow'

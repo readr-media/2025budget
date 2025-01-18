@@ -11,6 +11,7 @@ export type IconName =
   | 'icon-angry'
   | 'icon-sad'
   | 'icon-indifferent'
+  | 'icon-go-up'
 
 export default function Icon({
   iconName,

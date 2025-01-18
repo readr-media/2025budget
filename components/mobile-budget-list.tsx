@@ -26,7 +26,7 @@ export default function MobileBudgetList({
           ref={i === list.length - 1 ? targetRef : undefined}
         >
           <div className="border-b border-border-gray py-3">
-            <div className="flex gap-6 text-custom-red">
+            <div className="flex items-center gap-6 text-custom-red">
               <div className="text-sm font-bold">編號</div>
               <div>{item.ID}</div>
             </div>
@@ -68,7 +68,7 @@ export default function MobileBudgetList({
           <div className="flex gap-2 border-b border-border-gray pb-5 pt-4">
             <div className="flex w-[118px] shrink-0 flex-col gap-4">
               <div className="text-sm font-bold">關心數</div>
-              <div className="">99999</div>
+              <div className="">{item.totalReaction}</div>
             </div>
             <div className="flex w-[70px] shrink-0 flex-col gap-[9px]">
               <div className="text-sm font-bold">我關心這個</div>

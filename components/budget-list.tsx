@@ -17,6 +17,8 @@ import { db } from '@/utils/firebase/app'
 import DesktopBudgetTable from './desktop-budget-table'
 import MobileBudgetList from './mobile-budget-list'
 import BudgetListControl from './budget-list-control'
+import useInView from '@/hooks/use-in-view'
+import Icon from './icon'
 
 const notoSansTC = Noto_Sans_TC({
   subsets: ['latin'],
@@ -33,6 +35,8 @@ export default function BudgetList() {
     DocumentData,
     DocumentData
   > | null>(null) // For pagination
+  const [showGoTop, setShowGoTop] = useState(false)
+  const { targetRef, isIntersecting } = useInView()
 
   const categories = useMemo(() => {
     if (!categoryData) return []
@@ -115,6 +119,11 @@ export default function BudgetList() {
   }, [currentSubCategory, lastDoc])
 
   useEffect(() => {
+    if (isIntersecting === null) return
+    setShowGoTop(isIntersecting)
+  }, [isIntersecting])
+
+  useEffect(() => {
     if (currentSubCategory) {
       setLastDoc(null)
       fetchBudgetList(currentSubCategory)
@@ -148,31 +157,45 @@ export default function BudgetList() {
   }, [])
 
   return (
-    <section
-      id="budget-list"
-      className={`${notoSansTC.className} min-h-screen w-full pt-[108px] lg:pt-[125px]`}
-    >
-      <div className="mx-auto flex max-w-[500px] flex-col items-center px-[31px] sm:px-0 lg:max-w-[964px]">
-        <h2 className="text-xl font-bold">
-          這些是目前在立法院預算審議過程中，立委提出的刪減和凍結提案：
-        </h2>
-        <BudgetListControl
-          currentCategory={currentCategory}
-          categories={categories}
-          currentSubCategory={currentSubCategory}
-          subCategories={subCategories}
-          onChangeCategory={onChangeCategory}
-          onChangeSubCategory={setCurrentSubCategory}
-        />
-        <p className="mt-7 lg:mt-9">
-          想隨機看不同提案內容？
-          <a href="#random-ten" className="text-custom-blue underline">
-            點我跳轉
-          </a>
-        </p>
-        <DesktopBudgetTable list={list} loadMore={fetchNextBudgetList} />
-        <MobileBudgetList list={list} loadMore={fetchNextBudgetList} />
-      </div>
-    </section>
+    <>
+      <section
+        id="budget-list"
+        className={`${notoSansTC.className} min-h-screen w-full pt-[108px] lg:pt-[125px]`}
+        ref={targetRef}
+      >
+        <div className="mx-auto flex max-w-[500px] flex-col items-center px-[31px] sm:px-0 lg:max-w-[964px]">
+          <h2 className="text-xl font-bold">
+            這些是目前在立法院預算審議過程中，立委提出的刪減和凍結提案：
+          </h2>
+          <BudgetListControl
+            currentCategory={currentCategory}
+            categories={categories}
+            currentSubCategory={currentSubCategory}
+            subCategories={subCategories}
+            onChangeCategory={onChangeCategory}
+            onChangeSubCategory={setCurrentSubCategory}
+          />
+          <p className="mt-7 lg:mt-9">
+            想隨機看不同提案內容？
+            <a href="#random-ten" className="text-custom-blue underline">
+              點我跳轉
+            </a>
+          </p>
+          <DesktopBudgetTable list={list} loadMore={fetchNextBudgetList} />
+          <MobileBudgetList list={list} loadMore={fetchNextBudgetList} />
+        </div>
+      </section>
+      {showGoTop && (
+        <a
+          className="fixed bottom-[36px] right-[36px] flex size-[60px] flex-col items-center justify-center gap-[2px] rounded-full bg-black px-4 pb-[8px] pt-[6px]"
+          href="#budget-list"
+        >
+          <Icon iconName="icon-go-up" size={{ width: 15, height: 12 }} />
+          <span className="w-[28px] shrink-0 text-sm font-medium leading-[1.08] text-white">
+            回到分類
+          </span>
+        </a>
+      )}
+    </>
   )
 }

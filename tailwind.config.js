@@ -13,12 +13,13 @@ module.exports = {
       xl: '1440px',
       xxl: '1920px',
     },
-
     extend: {
       colors: {
         'background-gray': '#EDEDED',
         'custom-blue': '#3E51FF',
         'custom-red': '#D18081',
+        'text-gray': '#787878',
+        'border-gray': '#B9B9B9',
       },
     },
     fontFamily: {

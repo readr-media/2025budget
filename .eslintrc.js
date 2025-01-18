@@ -16,6 +16,7 @@ module.exports = {
     'max-lines': ['error', { max: 500 }],
     'prettier/prettier': 'error',
     'no-unused-vars': 'off',
+    'no-console': ['warn', { allow: ['warn', 'error'] }],
     '@typescript-eslint/no-unused-vars': 'error',
     'tailwindcss/classnames-order': 'off',
     'tailwindcss/enforces-shorthand': 'error',

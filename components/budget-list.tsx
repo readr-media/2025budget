@@ -1,4 +1,9 @@
 import { BudgetData } from '@/types/budget'
+import { Noto_Sans_TC } from 'next/font/google'
+
+const notoSansTC = Noto_Sans_TC({
+  subsets: ['latin'],
+})
 
 const item = {
   ID: 1,
@@ -18,7 +23,7 @@ export default function BudgetList() {
   return (
     <section
       id="budget-list"
-      className="min-h-screen w-full pt-[108px] lg:pt-[125px]"
+      className={`${notoSansTC.className} min-h-screen w-full pt-[108px] lg:pt-[125px]`}
     >
       <div className="mx-auto flex max-w-[500px] flex-col items-center px-[31px] sm:px-0 lg:max-w-[964px]">
         <h2 className="text-xl font-bold">

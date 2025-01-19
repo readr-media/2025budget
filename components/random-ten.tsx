@@ -12,6 +12,7 @@ import {
 import Icon from './icon'
 import { Noto_Sans_TC } from 'next/font/google'
 import Spinner from './spinner'
+import { useUserReactionStore } from '@/lib/store'
 
 const notoSansTC = Noto_Sans_TC({
   subsets: ['latin'],
@@ -32,8 +33,8 @@ const iconButtons: {
   },
 ]
 
-type Reaction = keyof typeof defaultReaction
-const defaultReaction = {
+export type Reaction = keyof typeof defaultReaction
+export const defaultReaction = {
   happy: 0,
   angry: 0,
   letdown: 0,
@@ -45,6 +46,7 @@ const randomness = 10
 export default function RandomTen() {
   const [progress, setProgress] = useState(0)
   const [viewData, setViewData] = useState<BudgetData[] | null>(null)
+  const { setReaction } = useUserReactionStore()
 
   useEffect(() => {
     const init = async () => {
@@ -79,6 +81,7 @@ export default function RandomTen() {
 
   const handleClickButton = async (reaction: Reaction, id: number) => {
     if (progress < randomness) {
+      setReaction(id, reaction)
       await handleUserReaction(reaction, id)
       setProgress((prev) => prev + 1)
     }
@@ -102,8 +105,8 @@ export default function RandomTen() {
         {progress === randomness ? (
           <>
             <div className="mb-12 flex h-[192px] w-[360px] flex-col items-center justify-center">
-              <p className="text-text-gray text-lg">感謝你表示意見！</p>
-              <p className="text-text-gray text-lg">
+              <p className="text-lg text-text-gray">感謝你表示意見！</p>
+              <p className="text-lg text-text-gray">
                 來看大家都關心什麼預算提案
               </p>
             </div>

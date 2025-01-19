@@ -10,5 +10,7 @@ const FIREBASE_CONFIG = {
   appId: '1:972295576824:web:9169390572cb77f8a32f0d',
   measurementId: 'G-ETPMFJKSJR',
 }
+const LATEST_NEWS_JSON_URL =
+  'https://raw.githubusercontent.com/readr-data/2025_budget/refs/heads/main/update.json'
 
-export { ENV, FIREBASE_CONFIG, BASE_JSON_URL }
+export { ENV, FIREBASE_CONFIG, BASE_JSON_URL, LATEST_NEWS_JSON_URL }

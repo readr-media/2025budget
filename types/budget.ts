@@ -15,3 +15,8 @@ export type BudgetData = {
 export type CategoryData = {
   [key: string]: string[]
 }
+
+export type News = {
+  date_time: string
+  content: string
+}

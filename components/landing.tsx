@@ -1,15 +1,13 @@
 import Icon from './icon'
 import { Noto_Sans_TC } from 'next/font/google'
 import NextLink from 'next/link'
+import LatestNews from './latest-news'
 
 const notoSansTC = Noto_Sans_TC({
   subsets: ['latin'],
 })
 
 export default function Landing() {
-  const date = new Date(Date.now())
-  const formattedDate = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`
-
   return (
     <section className="h-[calc(100vh-68px)] pt-[68px]">
       <div className="flex flex-col items-center">
@@ -19,23 +17,7 @@ export default function Landing() {
         <p className="w-[328px] pb-11 text-base font-medium">
           文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字
         </p>
-        <p className="pb-3 text-xl font-bold">{`[最新進度]`}</p>
-        <div className="flex flex-row items-center pb-4">
-          <Icon
-            iconName="icon-triangle-left"
-            size={{ width: 16, height: 16 }}
-            className="size-4"
-          />
-          <p className={`${notoSansTC.className} px-1 text-base font-bold`}>
-            {formattedDate}
-          </p>
-          <Icon
-            iconName="icon-triangle-right"
-            size={{ width: 16, height: 16 }}
-            className="size-4"
-          />
-        </div>
-        <div className="mb-[42px] h-[100px] w-[252px] bg-white"></div>
+        <LatestNews />
         <a href="#random-ten" className="pb-[72px]">
           <Icon
             iconName="icon-project-entry"

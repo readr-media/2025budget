@@ -8,6 +8,8 @@ import {
   query,
   where,
   updateDoc,
+  increment,
+  getCountFromServer,
 } from 'firebase/firestore'
 import Icon from './icon'
 import { Noto_Sans_TC } from 'next/font/google'
@@ -51,26 +53,18 @@ export default function RandomTen() {
   useEffect(() => {
     const init = async () => {
       try {
-        const querySnapshot = await getDocs(
-          collection(db, 'project-bucket-2025')
+        const budgetCol = collection(db, 'project-bucket-2025')
+        const snapshot = await getCountFromServer(budgetCol)
+        const totalCount = snapshot.data().count
+        const randomIndexes = getRandomValues(totalCount, randomness)
+        const q = query(
+          collection(db, 'project-bucket-2025'),
+          where('ID', 'in', randomIndexes)
         )
-        const data: BudgetData[] = querySnapshot.docs.map((doc) => ({
-          ID: doc.data().ID,
-          action: doc.data().action,
-          category: doc.data().category,
-          content: doc.data().content,
-          cost: doc.data().cost,
-          full_name: doc.data().full_name,
-          result: doc.data().result,
-          time_place: doc.data().time_place,
-          totalReaction: doc.data().totalReaction,
-          url: doc.data().url,
-          who: doc.data().who,
-        }))
-        const randomIndexes = getRandomValues(data.length, randomness)
-        const randomData = randomIndexes.map((index) => data[index])
+        const querySnapshot = await getDocs(q)
+        const data = querySnapshot.docs.map((doc) => doc.data()) as BudgetData[]
 
-        setViewData(randomData)
+        setViewData(data)
       } catch (err) {
         console.error(err)
       }
@@ -196,28 +190,9 @@ export const handleUserReaction = async (
   )
   const querySnapshot = await getDocs(q)
   querySnapshot.forEach(async (docSnapshot) => {
-    if (!docSnapshot.data().reaction) {
-      const newReaction = {
-        ...defaultReaction,
-        [userReaction]: 1,
-      }
-      await updateDoc(docSnapshot.ref, {
-        reaction: newReaction,
-        totalReaction: 1,
-      })
-    } else {
-      const currentReactionCount =
-        docSnapshot.data().reaction?.[userReaction] || 0
-      await updateDoc(docSnapshot.ref, {
-        [`reaction.${userReaction}`]: currentReactionCount + 1,
-      })
-
-      const totalReactionCount = Object.values(
-        docSnapshot.data().reaction as Record<Reaction, number>
-      ).reduce((sum, value) => sum + value, 0)
-      await updateDoc(docSnapshot.ref, {
-        totalReaction: totalReactionCount,
-      })
-    }
+    await updateDoc(docSnapshot.ref, {
+      [`reaction.${userReaction}`]: increment(1),
+      totalReaction: increment(1),
+    })
   })
 }

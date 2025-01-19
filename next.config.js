@@ -5,6 +5,10 @@ const withBundlerAnalyzer = require('@next/bundle-analyzer')({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  assetPrefix:
+    process.env.NODE_ENV === 'production'
+      ? `${process.env.DOMAIN}/${process.env.GCS_BUCKET_PATH}`
+      : '',
   reactStrictMode: true,
   swcMinify: true,
   images: {

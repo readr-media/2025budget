@@ -18,13 +18,13 @@ const notoSansTC = Noto_Sans_TC({
   subsets: ['latin'],
 })
 
-const iconButtons: {
+export const iconButtons: {
   name: 'icon-happy' | 'icon-angry' | 'icon-letdown' | 'icon-indifferent'
   reaction: Reaction
   label: string
 }[] = [
   { name: 'icon-happy', reaction: 'happy', label: 'Feeling Happy' },
-  { name: 'icon-angry', reaction: 'happy', label: 'Feeling Angry' },
+  { name: 'icon-angry', reaction: 'angry', label: 'Feeling Angry' },
   { name: 'icon-letdown', reaction: 'letdown', label: 'Feeling Letdown' },
   {
     name: 'icon-indifferent',
@@ -186,7 +186,10 @@ const ProgressBar = ({ progress }: { progress: number }) => {
   )
 }
 
-const handleUserReaction = async (userReaction: Reaction, docId: number) => {
+export const handleUserReaction = async (
+  userReaction: Reaction,
+  docId: number
+) => {
   const q = query(
     collection(db, 'project-bucket-2025'),
     where('ID', '==', docId)

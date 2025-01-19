@@ -1,6 +1,9 @@
 import useInView from '@/hooks/use-in-view'
+import { useUserReactionStore } from '@/lib/store'
 import { BudgetData } from '@/types/budget'
 import { ForwardedRef, forwardRef, useEffect, useState } from 'react'
+import { Reaction } from './random-ten'
+import ReactionButton from './reaction-button'
 
 export default function DesktopBudgetTable({
   list,
@@ -9,6 +12,7 @@ export default function DesktopBudgetTable({
   list: BudgetData[]
   loadMore: () => void
 }) {
+  const targetReactions = useUserReactionStore((state) => state.targetReactions)
   const { targetRef, isIntersecting: shouldStartLoadMore } = useInView()
 
   useEffect(() => {
@@ -37,7 +41,7 @@ export default function DesktopBudgetTable({
           <th className="w-[74px] text-wrap pb-3 pr-[40px]">審議結果</th>
           <th className="w-[245px] pb-3 text-left">提案內容</th>
           <th className="w-[90px] pb-3 text-left">預算金額</th>
-          <th className="w-[73px] pb-3 text-left">關心數</th>
+          <th className="w-[73px] pb-3 text-center">關心數</th>
           <th className="w-[82px] pb-3">我關心這個</th>
         </tr>
       </thead>
@@ -47,6 +51,7 @@ export default function DesktopBudgetTable({
             key={item.ID}
             item={item}
             ref={i === list.length - 1 ? targetRef : undefined}
+            reaction={targetReactions[item.ID]}
           />
         ))}
       </tbody>
@@ -55,7 +60,10 @@ export default function DesktopBudgetTable({
 }
 
 const DesktopBudgetRow = forwardRef(
-  ({ item }: { item: BudgetData }, ref: ForwardedRef<HTMLTableRowElement>) => {
+  (
+    { item, reaction }: { item: BudgetData; reaction?: Reaction },
+    ref: ForwardedRef<HTMLTableRowElement>
+  ) => {
     const [isExpanding, setIsExpanding] = useState(false)
     return (
       <tr className="border-t border-black py-4" ref={ref}>
@@ -73,9 +81,14 @@ const DesktopBudgetRow = forwardRef(
         >
           {item.content}
         </td>
-        <td className="py-4 align-top">{item.cost}</td>
-        <td className="py-4 align-top">{item.totalReaction}</td>
-        <td className="py-4 align-top">⭐</td>
+        <td className="py-4 pr-[19px] align-top">{item.cost}</td>
+        <td className="py-4 text-center align-top">
+          {item.totalReaction +
+            (!!reaction && reaction !== 'indifferent' ? 1 : 0)}
+        </td>
+        <td className="py-4 text-center align-top">
+          <ReactionButton reaction={reaction} itemId={item.ID} />
+        </td>
       </tr>
     )
   }

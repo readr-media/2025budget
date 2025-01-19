@@ -12,6 +12,7 @@ export type IconName =
   | 'icon-letdown'
   | 'icon-indifferent'
   | 'icon-go-up'
+  | 'icon-reaction'
 
 export default function Icon({
   iconName,

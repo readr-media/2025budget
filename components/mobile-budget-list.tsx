@@ -1,6 +1,9 @@
 import useInView from '@/hooks/use-in-view'
 import { BudgetData } from '@/types/budget'
 import { ForwardedRef, forwardRef, useEffect, useState } from 'react'
+import { Reaction } from './random-ten'
+import ReactionButton from './reaction-button'
+import { useUserReactionStore } from '@/lib/store'
 
 export default function MobileBudgetList({
   list,
@@ -9,6 +12,7 @@ export default function MobileBudgetList({
   list: BudgetData[]
   loadMore: () => void
 }) {
+  const targetReactions = useUserReactionStore((state) => state.targetReactions)
   const { targetRef, isIntersecting: shouldStartLoadMore } = useInView()
 
   useEffect(() => {
@@ -24,6 +28,7 @@ export default function MobileBudgetList({
           key={item.ID}
           item={item}
           ref={i === list.length - 1 ? targetRef : undefined}
+          reaction={targetReactions[item.ID]}
         />
       ))}
     </ul>
@@ -31,7 +36,10 @@ export default function MobileBudgetList({
 }
 
 const MobileBudgetItem = forwardRef(
-  ({ item }: { item: BudgetData }, ref: ForwardedRef<HTMLLIElement>) => {
+  (
+    { item, reaction }: { item: BudgetData; reaction?: Reaction },
+    ref: ForwardedRef<HTMLLIElement>
+  ) => {
     const [isExpanding, setIsExpanding] = useState(false)
     return (
       <li className="flex flex-col border-t border-black lg:hidden" ref={ref}>
@@ -85,11 +93,16 @@ const MobileBudgetItem = forwardRef(
         <div className="flex gap-2 border-b border-border-gray pb-5 pt-4">
           <div className="flex w-[118px] shrink-0 flex-col gap-4">
             <div className="text-sm font-bold">關心數</div>
-            <div className="">{item.totalReaction}</div>
+            <div className="">
+              {item.totalReaction +
+                (!!reaction && reaction !== 'indifferent' ? 1 : 0)}
+            </div>
           </div>
           <div className="flex w-[70px] shrink-0 flex-col gap-[9px]">
             <div className="text-sm font-bold">我關心這個</div>
-            <div className="">O</div>
+            <div className="text-center">
+              <ReactionButton reaction={reaction} itemId={item.ID} />
+            </div>
           </div>
         </div>
       </li>

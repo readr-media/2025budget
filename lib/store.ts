@@ -1,9 +1,11 @@
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
-import { type Reaction, defaultReaction } from '@/components/random-ten'
+import { type Reaction } from '@/components/random-ten'
+
+const STORAGE_VERSION = 1
 
 type UserReactionStore = {
-  targetReactions: Record<number, Record<Reaction, number>>
+  targetReactions: Record<number, Reaction>
   setReaction: (targetId: number, reaction: Reaction) => void
 }
 
@@ -13,16 +15,10 @@ export const useUserReactionStore = create<UserReactionStore>()(
       targetReactions: {},
       setReaction: (targetId, reaction) =>
         set((state) => {
-          const targetData = state.targetReactions[targetId] || defaultReaction
-          const updatedReactions = {
-            ...targetData,
-            [reaction]: targetData[reaction] + 1,
-          }
-
           return {
             targetReactions: {
               ...state.targetReactions,
-              [targetId]: updatedReactions,
+              [targetId]: reaction,
             },
           }
         }),
@@ -30,6 +26,7 @@ export const useUserReactionStore = create<UserReactionStore>()(
     {
       name: 'user-reactions',
       storage: createJSONStorage(() => localStorage),
+      version: STORAGE_VERSION,
     }
   )
 )

@@ -9,7 +9,7 @@ export type IconName =
   | 'icon-bracket-right'
   | 'icon-happy'
   | 'icon-angry'
-  | 'icon-sad'
+  | 'icon-letdown'
   | 'icon-indifferent'
   | 'icon-go-up'
 

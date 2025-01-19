@@ -13,7 +13,9 @@ export default function Landing() {
   return (
     <section className="h-[calc(100vh-68px)] pt-[68px]">
       <div className="flex flex-col items-center">
-        <h2 className="pb-6 pt-10 text-4xl font-bold">一起【審預算】</h2>
+        <h2 className="pb-6 pt-10 text-4xl font-bold lg:pt-[100px]">
+          一起【審預算】
+        </h2>
         <p className="w-[328px] pb-11 text-base font-medium">
           文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字
         </p>

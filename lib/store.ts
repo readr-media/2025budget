@@ -1,7 +1,6 @@
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 import { type Reaction } from '@/components/random-ten'
-import { type ComponentKey } from '@/app/page'
 
 const STORAGE_VERSION = 1
 
@@ -9,7 +8,7 @@ type UserReactionStore = {
   targetReactions: Record<number, Reaction>
   setReaction: (targetId: number, reaction: Reaction) => void
 }
-
+type ComponentKey = 'Landing' | 'RandomTen' | 'BudgetList'
 type ComponentState = {
   currentComponent: ComponentKey
   setCurrentComponent: (component: ComponentKey) => void

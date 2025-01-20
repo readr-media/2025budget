@@ -13,6 +13,9 @@ export default function LatestNews() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const currentNews = news[currentIndex]
 
+  const hideLeftArrow = currentIndex === 0 || !news.length
+  const hideRightArrow = currentIndex === news.length - 1 || !news.length
+
   useEffect(() => {
     const init = async () => {
       try {
@@ -47,7 +50,8 @@ export default function LatestNews() {
       <div className="flex flex-row items-center gap-2 pb-4">
         <button
           onClick={() => setCurrentIndex(currentIndex - 1)}
-          disabled={currentIndex === 0 || !news.length}
+          disabled={hideLeftArrow}
+          className={`${hideLeftArrow ? 'opacity-0' : ''}`}
         >
           <Icon
             iconName="icon-triangle-left"
@@ -60,7 +64,8 @@ export default function LatestNews() {
         </p>
         <button
           onClick={() => setCurrentIndex(currentIndex + 1)}
-          disabled={currentIndex === news.length - 1 || !news.length}
+          disabled={hideRightArrow}
+          className={`${hideRightArrow ? 'opacity-0' : ''}`}
         >
           <Icon
             iconName="icon-triangle-right"

@@ -35,7 +35,7 @@ export default function LatestNews() {
 
   if (!currentNews) {
     return (
-      <div className="mb-[42px] flex h-[180px] shrink-0 flex-col items-center justify-center">
+      <div className="mb-[24px] flex h-[180px] shrink-0 flex-col items-center justify-center">
         最新進度載入中...
       </div>
     )

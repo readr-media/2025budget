@@ -46,6 +46,7 @@ import {
   SITE_TITLE,
   SITE_URL,
 } from '@/constants/config'
+import ComScoreScript from '@/components/comscore-script'
 export default function RootLayout({
   children,
 }: {
@@ -54,6 +55,7 @@ export default function RootLayout({
   return (
     <html lang="zh-Hant" className={notoSerif.className}>
       <body className="border-[3px] border-black bg-background-gray">
+        <ComScoreScript />
         <header className="fixed left-0 top-0 z-10 w-full border-[3px] border-b-0 border-black bg-background-gray py-5 pl-5 pr-6">
           <div className="flex flex-row justify-between">
             <Icon iconName="logo" size={{ width: 152, height: 46 }} />

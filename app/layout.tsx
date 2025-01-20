@@ -11,6 +11,24 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 
+export const metadata: Metadata = {
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION,
+  openGraph: {
+    type: 'website',
+    url: SITE_URL,
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    siteName: SITE_TITLE,
+    locale: 'zh_TW',
+    images: {
+      url: SITE_OG_IMAGE,
+      width: 1200,
+      height: 630,
+    },
+  },
+}
+
 const notoSansTC = Noto_Sans_TC({
   subsets: ['latin'],
 })
@@ -21,6 +39,13 @@ const notoSerif = Noto_Serif({
 
 import Icon from '../components/icon'
 import ShareButton from '@/components/share-button'
+import { Metadata } from 'next'
+import {
+  SITE_DESCRIPTION,
+  SITE_OG_IMAGE,
+  SITE_TITLE,
+  SITE_URL,
+} from '@/constants/config'
 export default function RootLayout({
   children,
 }: {

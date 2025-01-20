@@ -1,5 +1,8 @@
 const ENV = process.env.NEXT_PUBLIC_ENV
 const BASE_JSON_URL = process.env.NEXT_PUBLIC_BASE_JSON_URL ?? ''
+const SITE_DOMAIN = process.env.DOMAIN ?? ''
+const SITE_PATH = process.env.GCS_BUCKET_PATH ?? ''
+
 const FIREBASE_CONFIG = {
   apiKey: 'AIzaSyAzFpnoOmD13ZEqIfdh5_tm2Q3fCP-chK0',
   authDomain: 'read-projects-prod.firebaseapp.com',
@@ -13,4 +16,19 @@ const FIREBASE_CONFIG = {
 const LATEST_NEWS_JSON_URL =
   'https://raw.githubusercontent.com/readr-data/2025_budget/refs/heads/main/update.json'
 
-export { ENV, FIREBASE_CONFIG, BASE_JSON_URL, LATEST_NEWS_JSON_URL }
+const SITE_TITLE = '【持續更新】READr 中央政府總預算案審查監督平台'
+const SITE_DESCRIPTION =
+  '在READr Mesh 114 年中央政府總預算案審查，立委提出哪些刪減和建議？透過「隨機」和「分類」模式一目暸然。'
+const SITE_URL = `${SITE_DOMAIN}/${SITE_PATH}`
+const SITE_OG_IMAGE = `${SITE_URL}/og.jpg`
+
+export {
+  ENV,
+  FIREBASE_CONFIG,
+  BASE_JSON_URL,
+  LATEST_NEWS_JSON_URL,
+  SITE_TITLE,
+  SITE_DESCRIPTION,
+  SITE_URL,
+  SITE_OG_IMAGE,
+}

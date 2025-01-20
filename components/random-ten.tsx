@@ -14,7 +14,8 @@ import {
 import Icon from './icon'
 import { Noto_Sans_TC } from 'next/font/google'
 import Spinner from './spinner'
-import { useUserReactionStore } from '@/lib/store'
+import { useUserReactionStore, useComponentStore } from '@/lib/store'
+// import useInView from '@/hooks/use-in-view'
 
 const notoSansTC = Noto_Sans_TC({
   subsets: ['latin'],
@@ -49,6 +50,14 @@ export default function RandomTen() {
   const [progress, setProgress] = useState(0)
   const [viewData, setViewData] = useState<BudgetData[] | null>(null)
   const { setReaction } = useUserReactionStore()
+  const { setCurrentComponent } = useComponentStore()
+  // const { targetRef, isIntersecting } = useInView()
+
+  // useEffect(() => {
+  //   if (isIntersecting) {
+  //     setCurrentComponent('BudgetList')
+  //   }
+  // }, [isIntersecting, setCurrentComponent])
 
   useEffect(() => {
     const init = async () => {
@@ -82,80 +91,92 @@ export default function RandomTen() {
   }
 
   return (
-    <section id="random-ten" className="h-[calc(100vh-68px)] pt-[68px]">
-      <div className="flex flex-col items-center">
-        <div className="flex flex-row items-center gap-2 pt-[46px] lg:pt-[100px]">
-          <Icon iconName="icon-bracket-left" size={{ width: 8, height: 26 }} />
-          <p
-            className={`${notoSansTC.className} w-[300px] text-center text-base font-medium`}
-          >
-            這些是目前在立法院預算審議過程中，立委提出的刪減和凍結提案：
-          </p>
-          <Icon iconName="icon-bracket-right" size={{ width: 8, height: 26 }} />
-        </div>
-        <div className="pb-[60px] pt-[30px]">
-          <ProgressBar progress={progress * 10} />
-        </div>
-        {progress === randomness ? (
-          <>
-            <div className="mb-12 flex h-[192px] w-[360px] flex-col items-center justify-center">
-              <p className="text-lg text-text-gray">感謝你表示意見！</p>
-              <p className="text-lg text-text-gray">
-                來看大家都關心什麼預算提案
-              </p>
-            </div>
-            <div className="flex flex-row gap-2 pb-[72px]">
-              <NextLink href={'#budget-list'}>
-                <Icon
-                  iconName="icon-project-entry"
-                  size={{ width: 200, height: 126 }}
-                />
-              </NextLink>
-            </div>
-          </>
-        ) : (
-          <>
-            {viewData?.[progress] ? (
-              <>
-                <div className="mb-12 h-[192px] w-[360px] overflow-y-scroll rounded-lg border border-black px-9 py-3">
-                  <p className="">{viewData[progress].time_place}</p>
-                  <p>{viewData[progress].full_name}</p>
-                  <p>{viewData[progress].who}</p>
-                  <p>{viewData[progress].content}</p>
-                </div>
-                <div className="flex flex-row gap-2 pb-[72px]">
-                  {iconButtons.map(({ name, reaction, label }) => (
-                    <button
-                      key={name}
-                      className="flex items-center justify-center"
-                      aria-label={label}
-                      onClick={() =>
-                        handleClickButton(reaction, viewData[progress].ID)
-                      }
-                    >
-                      <Icon iconName={name} size={{ width: 86, height: 54 }} />
-                    </button>
-                  ))}
-                </div>
-              </>
-            ) : (
-              <div className="flex h-[366px] items-center justify-center">
-                <Spinner />
+    <>
+      <section id="random-ten" className="h-svh pt-[68px]">
+        <div className="flex flex-col items-center">
+          <div className="flex flex-row items-center gap-2 pt-[46px] lg:pt-[100px]">
+            <Icon
+              iconName="icon-bracket-left"
+              size={{ width: 8, height: 26 }}
+            />
+            <p
+              className={`${notoSansTC.className} w-[300px] text-center text-base font-medium`}
+            >
+              這些是目前在立法院預算審議過程中，立委提出的刪減和凍結提案：
+            </p>
+            <Icon
+              iconName="icon-bracket-right"
+              size={{ width: 8, height: 26 }}
+            />
+          </div>
+          <div className="pb-[60px] pt-[30px]">
+            <ProgressBar progress={progress * 10} />
+          </div>
+          {progress === randomness ? (
+            <>
+              <div className="mb-12 flex h-[192px] w-[360px] flex-col items-center justify-center">
+                <p className="text-lg text-text-gray">感謝你表示意見！</p>
+                <p className="text-lg text-text-gray">
+                  來看大家都關心什麼預算提案
+                </p>
               </div>
-            )}
-          </>
-        )}
-        <p className="text-base font-normal">
-          想直接看所有提案內容？
-          <NextLink
-            href={'#budget-list'}
-            className="text-custom-blue underline"
-          >
-            點我跳轉
-          </NextLink>
-        </p>
-      </div>
-    </section>
+              <div className="flex flex-row gap-2 pb-6">
+                <NextLink href={'#budget-list'}>
+                  <Icon
+                    iconName="icon-project-entry"
+                    size={{ width: 200, height: 126 }}
+                  />
+                </NextLink>
+              </div>
+            </>
+          ) : (
+            <>
+              {viewData?.[progress] ? (
+                <>
+                  <div className="mb-4 h-[192px] w-[360px] overflow-y-scroll rounded-lg border border-black px-9 py-3">
+                    <p>審議日期（階段）:{viewData[progress].time_place}</p>
+                    <p>部會名稱 :{viewData[progress].full_name}</p>
+                    <p>提案人（連署人）:{viewData[progress].who}</p>
+                    <p>提案內容 :{viewData[progress].content}</p>
+                  </div>
+                  <div className="flex w-[200px] flex-wrap gap-2 pb-6">
+                    {iconButtons.map(({ name, reaction, label }) => (
+                      <button
+                        key={name}
+                        className="flex items-center justify-center"
+                        aria-label={label}
+                        onClick={() =>
+                          handleClickButton(reaction, viewData[progress].ID)
+                        }
+                      >
+                        <Icon
+                          iconName={name}
+                          size={{ width: 96, height: 60 }}
+                        />
+                      </button>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <div className="flex h-[366px] items-center justify-center">
+                  <Spinner />
+                </div>
+              )}
+            </>
+          )}
+          <p className="text-base font-normal">
+            想直接看所有提案內容？
+            <button
+              className="text-custom-blue underline"
+              onClick={() => setCurrentComponent('BudgetList')}
+            >
+              點我跳轉
+            </button>
+          </p>
+        </div>
+      </section>
+      {/* <div ref={targetRef}></div> */}
+    </>
   )
 }
 

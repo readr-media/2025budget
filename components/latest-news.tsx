@@ -69,7 +69,7 @@ export default function LatestNews() {
           />
         </button>
       </div>
-      <div className="mb-[42px] h-[100px] w-[252px] bg-white p-[10px]">
+      <div className="mb-6 h-[100px] w-[252px] bg-white p-[10px]">
         <pre className="size-full overflow-scroll text-wrap text-[15px] leading-[20px]">
           {currentNews.content}
         </pre>

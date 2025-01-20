@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 import { type Reaction } from '@/components/random-ten'
+import { type ComponentKey } from '@/app/page'
 
 const STORAGE_VERSION = 1
 
@@ -9,7 +10,17 @@ type UserReactionStore = {
   setReaction: (targetId: number, reaction: Reaction) => void
 }
 
-export const useUserReactionStore = create<UserReactionStore>()(
+type ComponentState = {
+  currentComponent: ComponentKey
+  setCurrentComponent: (component: ComponentKey) => void
+}
+
+const useComponentStore = create<ComponentState>()((set) => ({
+  currentComponent: 'Landing',
+  setCurrentComponent: (component) => set({ currentComponent: component }),
+}))
+
+const useUserReactionStore = create<UserReactionStore>()(
   persist(
     (set) => ({
       targetReactions: {},
@@ -30,3 +41,5 @@ export const useUserReactionStore = create<UserReactionStore>()(
     }
   )
 )
+
+export { useComponentStore, useUserReactionStore }

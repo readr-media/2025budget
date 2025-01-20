@@ -22,6 +22,13 @@ const SITE_DESCRIPTION =
 const SITE_URL = `${SITE_DOMAIN}/${SITE_PATH}`
 const SITE_OG_IMAGE = `${SITE_URL}/og.jpg`
 
+const GA4_IDS = {
+  dev: 'G-36HYH6NF6P',
+  prod: 'G-341XFN0675',
+}
+
+const GA4_ID = ENV === 'prod' ? GA4_IDS.prod : GA4_IDS.dev
+
 export {
   ENV,
   FIREBASE_CONFIG,
@@ -31,4 +38,5 @@ export {
   SITE_DESCRIPTION,
   SITE_URL,
   SITE_OG_IMAGE,
+  GA4_ID,
 }

@@ -1,20 +1,8 @@
 import Icon from './icon'
 import NextLink from 'next/link'
 import LatestNews from './latest-news'
-import { useComponentStore } from '@/lib/store'
-import useInView from '@/hooks/use-in-view'
-import { useEffect } from 'react'
 
 export default function Landing() {
-  const { targetRef, isIntersecting } = useInView()
-  const { setCurrentComponent } = useComponentStore()
-
-  useEffect(() => {
-    if (isIntersecting) {
-      setCurrentComponent('RandomTen')
-    }
-  }, [isIntersecting, setCurrentComponent])
-
   return (
     <>
       <section className="flex h-svh flex-col items-center pt-[68px]">
@@ -39,17 +27,13 @@ export default function Landing() {
           。）
         </div>
         <LatestNews />
-        <button
-          className="pb-[72px]"
-          onClick={() => setCurrentComponent('RandomTen')}
-        >
+        <NextLink href={'#random-ten'} className="pb-[72px]">
           <Icon
             iconName="icon-project-entry"
             size={{ width: 200, height: 126 }}
           />
-        </button>
+        </NextLink>
       </section>
-      <div ref={targetRef} className="sr-only"></div>
     </>
   )
 }

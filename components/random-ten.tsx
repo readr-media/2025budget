@@ -14,8 +14,7 @@ import {
 import Icon from './icon'
 import { Noto_Sans_TC } from 'next/font/google'
 import Spinner from './spinner'
-import { useUserReactionStore, useComponentStore } from '@/lib/store'
-// import useInView from '@/hooks/use-in-view'
+import { useUserReactionStore } from '@/lib/store'
 
 const notoSansTC = Noto_Sans_TC({
   subsets: ['latin'],
@@ -50,14 +49,6 @@ export default function RandomTen() {
   const [progress, setProgress] = useState(0)
   const [viewData, setViewData] = useState<BudgetData[] | null>(null)
   const { setReaction } = useUserReactionStore()
-  const { setCurrentComponent } = useComponentStore()
-  // const { targetRef, isIntersecting } = useInView()
-
-  // useEffect(() => {
-  //   if (isIntersecting) {
-  //     setCurrentComponent('BudgetList')
-  //   }
-  // }, [isIntersecting, setCurrentComponent])
 
   useEffect(() => {
     const init = async () => {
@@ -144,7 +135,7 @@ export default function RandomTen() {
                     <p className="pb-5 text-sm font-normal">
                       提案連署人：{viewData[progress].who}
                     </p>
-                    <p className="text-base font-normal">
+                    <p className="whitespace-pre-line text-base font-normal">
                       {viewData[progress].content}
                     </p>
                   </div>
@@ -175,16 +166,15 @@ export default function RandomTen() {
           )}
           <p className="text-base font-normal">
             想直接看所有提案內容？
-            <button
+            <NextLink
+              href={'#budgest-list'}
               className="text-custom-blue underline"
-              onClick={() => setCurrentComponent('BudgetList')}
             >
               點我跳轉
-            </button>
+            </NextLink>
           </p>
         </div>
       </section>
-      {/* <div ref={targetRef}></div> */}
     </>
   )
 }

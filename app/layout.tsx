@@ -7,6 +7,7 @@ import {
   DialogContent,
   DialogDescription,
   DialogHeader,
+  DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
 
@@ -37,25 +38,23 @@ export default function RootLayout({
                 </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
-                    <DialogDescription>
-                      <ul
-                        className={`${notoSansTC.className} text-sm font-bold`}
-                      >
-                        <li>記者：李又如</li>
-                        <li>設計：曾立宇</li>
-                        <li>工程：李文瀚、鄧宇哲、陳柏維、簡信昌</li>
-                        <li>資料處理：李又如、劉怡馨、陳珮瑜</li>
-                        <li>
-                          資料合作：
-                          <NextLink
-                            href={'https://openfun.tw/'}
-                            className="text-custom-blue"
-                          >
-                            歐噴有限公司
-                          </NextLink>
-                        </li>
-                      </ul>
-                    </DialogDescription>
+                    <DialogTitle></DialogTitle>
+                    <DialogDescription></DialogDescription>
+                    <ul className={`${notoSansTC.className} text-sm font-bold`}>
+                      <li>記者：李又如</li>
+                      <li>設計：曾立宇</li>
+                      <li>工程：李文瀚、鄧宇哲、陳柏維、簡信昌</li>
+                      <li>資料處理：李又如、劉怡馨、陳珮瑜</li>
+                      <li>
+                        資料合作：
+                        <NextLink
+                          href={'https://openfun.tw/'}
+                          className="text-custom-blue"
+                        >
+                          歐噴有限公司
+                        </NextLink>
+                      </li>
+                    </ul>
                   </DialogHeader>
                 </DialogContent>
               </Dialog>

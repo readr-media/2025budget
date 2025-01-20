@@ -16,7 +16,7 @@ export default function Page() {
       <div className="h-svh snap-center">
         <RandomTen />
       </div>
-      <div className="snap-start">
+      <div className="h-svh snap-start overflow-auto">
         <BudgetList />
       </div>
     </div>

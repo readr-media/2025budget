@@ -19,7 +19,7 @@ import MobileBudgetList from './mobile-budget-list'
 import BudgetListControl from './budget-list-control'
 import useInView from '@/hooks/use-in-view'
 import Icon from './icon'
-import { useComponentStore } from '@/lib/store'
+import NextLink from 'next/link'
 
 const notoSansTC = Noto_Sans_TC({
   subsets: ['latin'],
@@ -38,7 +38,6 @@ export default function BudgetList() {
   > | null>(null) // For pagination
   const [showGoTop, setShowGoTop] = useState(false)
   const { targetRef, isIntersecting } = useInView()
-  const { setCurrentComponent } = useComponentStore()
 
   const categories = useMemo(() => {
     if (!categoryItems.length) return []
@@ -192,12 +191,12 @@ export default function BudgetList() {
           />
           <p className="mt-7 lg:mt-9">
             想隨機看不同提案內容？
-            <button
+            <NextLink
+              href={'#random-ten'}
               className="text-custom-blue underline"
-              onClick={() => setCurrentComponent('RandomTen')}
             >
               點我跳轉
-            </button>
+            </NextLink>
           </p>
           <DesktopBudgetTable list={list} loadMore={fetchNextBudgetList} />
           <MobileBudgetList list={list} loadMore={fetchNextBudgetList} />

@@ -6,10 +6,16 @@ import RandomTen from '@/components/random-ten'
 
 export default function Page() {
   return (
-    <>
-      <Landing />
-      <RandomTen />
-      <BudgetList />
-    </>
+    <div className="h-screen snap-y snap-mandatory overflow-y-scroll scroll-smooth">
+      <div className="h-svh snap-center">
+        <Landing />
+      </div>
+      <div className="h-svh snap-center">
+        <RandomTen />
+      </div>
+      <div className="snap-center">
+        <BudgetList />
+      </div>
+    </div>
   )
 }

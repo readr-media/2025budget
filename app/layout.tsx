@@ -1,3 +1,5 @@
+'use client'
+
 import '@/styles/globals.css'
 
 import NextLink from 'next/link'
@@ -10,6 +12,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import { ShareButton } from '@readr-media/share-button'
 
 const notoSansTC = Noto_Sans_TC({
   subsets: ['latin'],
@@ -28,10 +33,10 @@ export default function RootLayout({
   return (
     <html lang="zh-Hant" className={notoSerif.className}>
       <body className="border-[3px] border-black bg-background-gray">
-        <header className="fixed left-0 top-0 z-10 w-full bg-background-gray py-5 pl-5 pr-6">
+        <header className="fixed left-0 top-0 z-10 w-full border-[3px] border-b-0 border-black bg-background-gray py-5 pl-5 pr-6">
           <div className="flex flex-row justify-between">
             <Icon iconName="logo" size={{ width: 92, height: 28 }} />
-            <div className="flex flex-row gap-3">
+            <div className="flex flex-row items-center gap-3">
               <Dialog>
                 <DialogTrigger className="text-sm text-black underline">
                   製作團隊
@@ -58,7 +63,15 @@ export default function RootLayout({
                   </DialogHeader>
                 </DialogContent>
               </Dialog>
-              <Icon iconName="icon-share" size={{ width: 20, height: 20 }} />
+              <ShareButton
+                pathColor="black"
+                direction="vertical"
+                className=""
+                // onClick={() => {}}
+                // LineClick={() => {}}
+                // FbClick={() => {}}
+                // LinkClick={() => {}}
+              />
             </div>
           </div>
         </header>

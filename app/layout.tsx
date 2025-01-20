@@ -35,7 +35,7 @@ export default function RootLayout({
       <body className="border-[3px] border-black bg-background-gray">
         <header className="fixed left-0 top-0 z-10 w-full border-[3px] border-b-0 border-black bg-background-gray py-5 pl-5 pr-6">
           <div className="flex flex-row justify-between">
-            <Icon iconName="logo" size={{ width: 92, height: 28 }} />
+            <Icon iconName="logo" size={{ width: 140, height: 43 }} />
             <div className="flex flex-row items-center gap-3">
               <Dialog>
                 <DialogTrigger className="text-sm text-black underline">

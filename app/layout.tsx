@@ -1,6 +1,18 @@
 import '@/styles/globals.css'
 
-import { Noto_Serif } from 'next/font/google'
+import NextLink from 'next/link'
+import { Noto_Serif, Noto_Sans_TC } from 'next/font/google'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTrigger,
+} from '@/components/ui/dialog'
+
+const notoSansTC = Noto_Sans_TC({
+  subsets: ['latin'],
+})
 const notoSerif = Noto_Serif({
   subsets: ['latin'],
   weight: ['400', '500', '700'],
@@ -18,7 +30,37 @@ export default function RootLayout({
         <header className="fixed left-0 top-0 z-10 w-full bg-background-gray py-5 pl-5 pr-6">
           <div className="flex flex-row justify-between">
             <Icon iconName="logo" size={{ width: 92, height: 28 }} />
-            <Icon iconName="icon-share" size={{ width: 20, height: 20 }} />
+            <div className="flex flex-row gap-3">
+              <Dialog>
+                <DialogTrigger className="text-sm text-black underline">
+                  製作團隊
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogDescription>
+                      <ul
+                        className={`${notoSansTC.className} text-sm font-bold`}
+                      >
+                        <li>記者：李又如</li>
+                        <li>設計：曾立宇</li>
+                        <li>工程：李文瀚、鄧宇哲、陳柏維、簡信昌</li>
+                        <li>資料處理：李又如、劉怡馨、陳珮瑜</li>
+                        <li>
+                          資料合作：
+                          <NextLink
+                            href={'https://openfun.tw/'}
+                            className="text-custom-blue"
+                          >
+                            歐噴有限公司
+                          </NextLink>
+                        </li>
+                      </ul>
+                    </DialogDescription>
+                  </DialogHeader>
+                </DialogContent>
+              </Dialog>
+              <Icon iconName="icon-share" size={{ width: 20, height: 20 }} />
+            </div>
           </div>
         </header>
         <main>{children}</main>

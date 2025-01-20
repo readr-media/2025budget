@@ -133,11 +133,20 @@ export default function RandomTen() {
             <>
               {viewData?.[progress] ? (
                 <>
-                  <div className="mb-4 h-[192px] w-[360px] overflow-y-scroll rounded-lg border border-black px-9 py-3">
-                    <p>審議日期（階段）:{viewData[progress].time_place}</p>
-                    <p>部會名稱 :{viewData[progress].full_name}</p>
-                    <p>提案人（連署人）:{viewData[progress].who}</p>
-                    <p>提案內容 :{viewData[progress].content}</p>
+                  <div className="mb-4 flex h-[192px] w-[360px] flex-col items-center overflow-y-scroll rounded-lg border border-black px-9 py-3">
+                    <p className="pb-[10px] text-base font-bold">
+                      {viewData[progress].time_place}，
+                      {viewData[progress].result}
+                    </p>
+                    <p className="pb-1 text-base font-medium">
+                      部會：{viewData[progress].full_name}
+                    </p>
+                    <p className="pb-5 text-sm font-normal">
+                      提案連署人：{viewData[progress].who}
+                    </p>
+                    <p className="text-base font-normal">
+                      {viewData[progress].content}
+                    </p>
                   </div>
                   <div className="flex w-[200px] flex-wrap gap-2 pb-6">
                     {iconButtons.map(({ name, reaction, label }) => (

@@ -72,7 +72,7 @@ export default function RootLayout({
                       <li>記者：李又如</li>
                       <li>設計：曾立宇</li>
                       <li>工程：李文瀚、鄧宇哲、陳柏維、簡信昌</li>
-                      <li>資料處理：李又如、劉怡馨、陳珮瑜</li>
+                      <li>資料處理：李又如、劉怡馨、陳珮瑜、徐湘芸</li>
                       <li>
                         資料合作：
                         <NextLink

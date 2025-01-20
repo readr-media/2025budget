@@ -85,7 +85,7 @@ export default function RandomTen() {
     <>
       <section id="random-ten" className="h-svh pt-[68px]">
         <div className="flex flex-col items-center">
-          <div className="flex flex-row items-center gap-2 pt-[46px] lg:pt-[100px]">
+          <div className="flex flex-row items-center gap-2 pt-5 lg:pt-[100px]">
             <Icon
               iconName="icon-bracket-left"
               size={{ width: 8, height: 26 }}
@@ -115,7 +115,7 @@ export default function RandomTen() {
                 <NextLink href={'#budget-list'}>
                   <Icon
                     iconName="icon-project-entry"
-                    size={{ width: 200, height: 126 }}
+                    size={{ width: 148, height: 94 }}
                   />
                 </NextLink>
               </div>

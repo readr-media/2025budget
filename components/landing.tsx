@@ -10,7 +10,7 @@ export default function Landing() {
           中央政府【總預算案】審查監督平台
         </h2>
         <div className="w-[328px] pb-6 font-medium lg:w-[432px]">
-          <p className="text-sm lg:text-base">
+          <p className="lg:text-base">
             114年中央政府總預算案審查，立委提出哪些刪減和建議？透過「隨機」和「分類」模式一目暸然。
           </p>
           <span className="text-xs text-text-gray lg:text-sm">
@@ -20,11 +20,11 @@ export default function Landing() {
             href={
               'https://docs.google.com/spreadsheets/d/1LTHdDPmihKQlUggj0PzITA44QGlQGgIUSR8D59hWZPI/edit?gid=1224248748#gid=1224248748'
             }
-            className="text-base text-text-gray underline"
+            className="text-xs text-text-gray underline"
           >
             此連結
           </NextLink>
-          。）
+          <span className="text-xs text-text-gray lg:text-sm">。）</span>
         </div>
         <LatestNews />
         <NextLink href={'#random-ten'} className="pb-[72px]">

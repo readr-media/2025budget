@@ -1,5 +1,5 @@
 import { Noto_Sans_TC } from 'next/font/google'
-import { BudgetData, CategoryData } from '@/types/budget'
+import { BudgetData, CategoryData, CategoryItem } from '@/types/budget'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
   collection,
@@ -28,7 +28,7 @@ const notoSansTC = Noto_Sans_TC({
 const ITEMS_PER_PAGE = 10
 
 export default function BudgetList() {
-  const [categoryData, setCategoryData] = useState<CategoryData | null>(null)
+  const [categoryItems, setCategoryItems] = useState<CategoryItem[]>([])
   const [currentCategory, setCurrentCategory] = useState('')
   const [currentSubCategory, setCurrentSubCategory] = useState('')
   const [list, setList] = useState<BudgetData[]>([])
@@ -41,18 +41,25 @@ export default function BudgetList() {
   const { setCurrentComponent } = useComponentStore()
 
   const categories = useMemo(() => {
-    if (!categoryData) return []
-    return Object.keys(categoryData)
-  }, [categoryData])
+    if (!categoryItems.length) return []
+    return categoryItems.map((categoryItem) => Object.keys(categoryItem)[0])
+  }, [categoryItems])
 
   const subCategories = useMemo(() => {
-    if (!categoryData || !currentCategory) return []
-    return categoryData[currentCategory]
-  }, [categoryData, currentCategory])
+    if (!categoryItems.length || !currentCategory) return []
+    return (
+      categoryItems.find(
+        (categoryItem) => Object.keys(categoryItem)[0] === currentCategory
+      )?.[currentCategory] ?? []
+    )
+  }, [categoryItems, currentCategory])
 
   const onChangeCategory = (newCategory: string) => {
-    if (!categoryData) return
-    const newSubCategory = categoryData[newCategory][0]
+    if (!categoryItems.length) return
+    const newSubCategory =
+      categoryItems.find(
+        (categoryItem) => Object.keys(categoryItem)[0] === newCategory
+      )?.[newCategory][0] ?? ''
     setCurrentCategory(newCategory)
     setCurrentSubCategory(newSubCategory)
   }
@@ -140,15 +147,21 @@ export default function BudgetList() {
         )
         const categoryData: CategoryData[] = querySnapshot.docs.map((doc) => {
           return {
-            ...doc.data(),
+            items: {
+              ...doc.data().items,
+            },
           }
         })
 
-        const categoryObj = categoryData[0]
-        const firstCategory = Object.keys(categoryObj)[0]
-        const firstSubCategory = categoryObj[firstCategory][0]
-        setCategoryData(categoryObj)
-        setCurrentCategory(Object.keys(categoryObj)[0])
+        const categoryItemsObj = categoryData[0].items
+        const categoryItems = Object.entries(categoryItemsObj)
+          .sort((a, b) => parseInt(a[0]) - parseInt(b[0]))
+          .map((arr) => arr[1])
+        const firstCategoryObj = categoryItems[0]
+        const firstCategory = Object.keys(firstCategoryObj)[0]
+        const firstSubCategory = firstCategoryObj[firstCategory][0]
+        setCategoryItems(categoryItems)
+        setCurrentCategory(firstCategory)
         setCurrentSubCategory(firstSubCategory)
       } catch (err) {
         console.error(err)

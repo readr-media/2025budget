@@ -12,8 +12,12 @@ export type BudgetData = {
   totalReaction: number
 }
 
-export type CategoryData = {
+export type CategoryItem = {
   [key: string]: string[]
+}
+
+export type CategoryData = {
+  items: { [key: number]: CategoryItem }
 }
 
 export type News = {

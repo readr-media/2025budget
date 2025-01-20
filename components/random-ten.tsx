@@ -167,7 +167,7 @@ export default function RandomTen() {
           <p className="text-base font-normal">
             想直接看所有提案內容？
             <NextLink
-              href={'#budgest-list'}
+              href={'#budget-list'}
               className="text-custom-blue underline"
             >
               點我跳轉

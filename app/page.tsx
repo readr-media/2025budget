@@ -13,7 +13,7 @@ export default function Page() {
       <div className="h-svh snap-center">
         <RandomTen />
       </div>
-      <div className="snap-center">
+      <div className="snap-start">
         <BudgetList />
       </div>
     </div>

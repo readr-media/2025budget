@@ -63,30 +63,47 @@ const MobileBudgetItem = forwardRef(
             <div className="pr-[10px]">{item.who}</div>
           </div>
         </div>
-        <div className="flex justify-between gap-2 border-b border-border-gray py-3">
-          <div className="flex w-1/5 max-w-[120px] shrink-0 flex-col gap-4">
+        <div className="flex justify-between border-b border-border-gray py-3">
+          <div className="flex w-[23%] max-w-[138px] shrink-0 flex-col gap-4">
             <div className="text-sm font-bold">提案</div>
             <div className="">{item.action}</div>
           </div>
-          <div className="flex w-[34.8%] max-w-[208.8px] shrink-0 flex-col gap-4">
+          <div className="flex w-[29%] max-w-[174px] shrink-0 flex-col gap-4">
             <div className="text-sm font-bold">審議結果</div>
             <div className="pr-4">{item.result}</div>
           </div>
-          <div className="flex w-[30.5%] max-w-[183px] shrink-0 flex-col gap-4">
+          <div className="flex w-[30%] max-w-[180px] shrink-0 flex-col gap-4">
             <div className="text-sm font-bold">預算金額</div>
             <div className="pr-[10px]">{item.cost}</div>
+          </div>
+          <div className="flex w-14 shrink-0 flex-col gap-4">
+            <a className="text-sm underline" href={item.url} target="_blank">
+              資料來源
+            </a>
           </div>
         </div>
         <div className="border-b border-border-gray py-4">
           <div className="flex flex-col gap-4">
             <div className="text-sm font-bold">提案內容</div>
             <div
-              className={`cursor-pointer ${isExpanding ? '' : 'line-clamp-4 overflow-hidden'}`}
+              className={`relative whitespace-pre text-wrap ${isExpanding ? '' : 'line-clamp-3 overflow-hidden'}`}
               onClick={() => {
                 setIsExpanding(!isExpanding)
               }}
             >
               {item.content}
+              {isExpanding ? (
+                <span className="whitespace-nowrap text-right font-bold text-custom-blue">
+                  [<span className="underline">收合</span>]
+                </span>
+              ) : (
+                <span className="absolute bottom-0 right-0 bg-gradient-to-r from-transparent from-0% to-background-gray to-15% pb-px pl-[17px]">
+                  ......
+                  <span className="font-bold text-custom-blue">
+                    [<span className="underline">更多</span>]
+                  </span>
+                </span>
+              )}
             </div>
           </div>
         </div>

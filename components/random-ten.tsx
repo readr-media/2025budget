@@ -115,7 +115,7 @@ export default function RandomTen() {
                 <NextLink href={'#budget-list'}>
                   <Icon
                     iconName="icon-project-entry"
-                    size={{ width: 200, height: 126 }}
+                    size={{ width: 148, height: 94 }}
                   />
                 </NextLink>
               </div>

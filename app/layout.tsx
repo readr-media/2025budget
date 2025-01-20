@@ -1,5 +1,3 @@
-'use client'
-
 import '@/styles/globals.css'
 
 import NextLink from 'next/link'
@@ -12,9 +10,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import { ShareButton } from '@readr-media/share-button'
 
 const notoSansTC = Noto_Sans_TC({
   subsets: ['latin'],
@@ -25,6 +20,7 @@ const notoSerif = Noto_Serif({
 })
 
 import Icon from '../components/icon'
+import ShareButton from '@/components/share-button'
 export default function RootLayout({
   children,
 }: {
@@ -63,15 +59,7 @@ export default function RootLayout({
                   </DialogHeader>
                 </DialogContent>
               </Dialog>
-              <ShareButton
-                pathColor="black"
-                direction="vertical"
-                className=""
-                // onClick={() => {}}
-                // LineClick={() => {}}
-                // FbClick={() => {}}
-                // LinkClick={() => {}}
-              />
+              <ShareButton />
             </div>
           </div>
         </header>

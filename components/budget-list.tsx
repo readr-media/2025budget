@@ -10,7 +10,6 @@ import {
   query,
   QueryDocumentSnapshot,
   startAfter,
-  // startAfter,
   where,
 } from 'firebase/firestore'
 import { db } from '@/utils/firebase/app'

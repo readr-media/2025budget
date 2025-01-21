@@ -7,6 +7,14 @@ import { useUserReactionStore } from '@/lib/store'
 import Icon from './icon'
 import { SITE_PATH } from '@/constants/config'
 
+const formatCost = (cost: number | string) => {
+  if (!cost) {
+    return cost
+  }
+  const numberCost = typeof cost === 'number' ? cost : parseInt(cost)
+  return numberCost.toLocaleString()
+}
+
 export default function MobileBudgetList({
   list,
   loadMore,
@@ -79,7 +87,7 @@ const MobileBudgetItem = forwardRef(
           </div>
           <div className="flex w-[30%] max-w-[180px] shrink-0 flex-col gap-4">
             <div className="text-sm font-bold">預算金額</div>
-            <div className="pr-[10px]">{item.cost}</div>
+            <div className="pr-[10px]">{formatCost(item.cost)}</div>
           </div>
           <div className="flex w-14 shrink-0 flex-col gap-4">
             <a className="text-sm underline" href={item.url} target="_blank">

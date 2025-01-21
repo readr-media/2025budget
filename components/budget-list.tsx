@@ -63,32 +63,36 @@ export default function BudgetList() {
     setCurrentSubCategory(newSubCategory)
   }
 
-  const fetchBudgetList = useCallback(async (subCategory: string) => {
-    const q = query(
-      collection(db, 'project-bucket-2025'),
-      where('full_name', '==', subCategory),
-      orderBy('totalReaction', 'desc'),
-      orderBy('ID', 'asc'),
-      limit(ITEMS_PER_PAGE)
-    )
+  const fetchBudgetList = useCallback(
+    async (mainCategory: string, subCategory: string) => {
+      const q = query(
+        collection(db, 'project-bucket-2025'),
+        where('category', '==', mainCategory),
+        where('full_name', '==', subCategory),
+        orderBy('totalReaction', 'desc'),
+        orderBy('ID', 'asc'),
+        limit(ITEMS_PER_PAGE)
+      )
 
-    const querySnapshot = await getDocs(q)
-    const list: BudgetData[] = querySnapshot.docs.map((doc) => ({
-      ID: doc.data().ID,
-      time_place: doc.data().time_place,
-      category: doc.data().category,
-      full_name: doc.data().full_name,
-      who: doc.data().who,
-      action: doc.data().action,
-      result: doc.data().result,
-      content: doc.data().content,
-      cost: doc.data().cost,
-      url: doc.data().url,
-      totalReaction: doc.data().totalReaction,
-    }))
-    setList(list)
-    setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1])
-  }, [])
+      const querySnapshot = await getDocs(q)
+      const list: BudgetData[] = querySnapshot.docs.map((doc) => ({
+        ID: doc.data().ID,
+        time_place: doc.data().time_place,
+        category: doc.data().category,
+        full_name: doc.data().full_name,
+        who: doc.data().who,
+        action: doc.data().action,
+        result: doc.data().result,
+        content: doc.data().content,
+        cost: doc.data().cost,
+        url: doc.data().url,
+        totalReaction: doc.data().totalReaction,
+      }))
+      setList(list)
+      setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1])
+    },
+    []
+  )
 
   const fetchNextBudgetList = useCallback(async () => {
     if (!lastDoc) return
@@ -132,11 +136,11 @@ export default function BudgetList() {
   }, [isIntersecting])
 
   useEffect(() => {
-    if (currentSubCategory) {
+    if (currentCategory && currentSubCategory) {
       setLastDoc(null)
-      fetchBudgetList(currentSubCategory)
+      fetchBudgetList(currentCategory, currentSubCategory)
     }
-  }, [currentSubCategory, fetchBudgetList])
+  }, [currentCategory, currentSubCategory, fetchBudgetList])
 
   useEffect(() => {
     const init = async () => {

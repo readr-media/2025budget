@@ -83,7 +83,7 @@ export default function RandomTen() {
 
   return (
     <>
-      <section id="random-ten" className="h-svh pt-[68px]">
+      <section id="random-ten" className="h-svh pt-[69px] lg:pt-[102px]">
         <div className="flex flex-col items-center">
           <div className="flex flex-row items-center gap-2 pt-5 lg:pt-[100px]">
             <Icon

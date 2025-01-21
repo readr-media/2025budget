@@ -5,7 +5,7 @@ import LatestNews from './latest-news'
 export default function Landing() {
   return (
     <>
-      <section className="flex h-svh flex-col items-center pt-[68px]">
+      <section className="flex h-svh flex-col items-center pt-[69px] lg:pt-[102px]">
         <h2 className="w-[320px] pb-6 pt-5 text-center text-2xl font-bold lg:pb-5 lg:pt-[100px]">
           中央政府【總預算案】審查監督平台
         </h2>

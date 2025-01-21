@@ -56,10 +56,15 @@ export default function RootLayout({
     <html lang="zh-Hant" className={notoSerif.className}>
       <body className="border-[3px] border-black bg-background-gray">
         <ComScoreScript />
-        <header className="fixed left-0 top-0 z-10 w-full border-[3px] border-b-0 border-black bg-background-gray py-5 pl-5 pr-6">
+        <header className="fixed left-0 top-0 z-10 w-full border-[3px] border-b-0 border-black bg-background-gray pb-5 pl-5 pr-6 pt-[17px]">
           <div className="flex flex-row justify-between">
             <a href="https://www.readr.tw/" target="_blank">
-              <Icon iconName="logo" size={{ width: 152, height: 46 }} />
+              <div className="hidden lg:block">
+                <Icon iconName="logo" size={{ width: 200, height: 61 }} />
+              </div>
+              <div className="lg:hidden">
+                <Icon iconName="logo" size={{ width: 93, height: 28 }} />
+              </div>
             </a>
             <div className="flex flex-row items-center gap-3">
               <Dialog>

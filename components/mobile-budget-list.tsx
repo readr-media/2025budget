@@ -4,6 +4,7 @@ import { ForwardedRef, forwardRef, useEffect, useState } from 'react'
 import { Reaction } from './random-ten'
 import ReactionButton from './reaction-button'
 import { useUserReactionStore } from '@/lib/store'
+import Icon from './icon'
 
 export default function MobileBudgetList({
   list,
@@ -43,11 +44,14 @@ const MobileBudgetItem = forwardRef(
     const [isExpanding, setIsExpanding] = useState(false)
     return (
       <li className="flex flex-col border-t border-black lg:hidden" ref={ref}>
-        <div className="border-b border-border-gray py-3">
+        <div className="flex items-center justify-between border-b border-border-gray py-3">
           <div className="flex items-center gap-6 text-custom-red">
             <div className="text-sm font-bold">編號</div>
             <div>{item.ID}</div>
           </div>
+          <a href={`/proposal?id=${item.ID}`} target="_blank">
+            <Icon iconName="icon-open" size={{ width: 20, height: 20 }} />
+          </a>
         </div>
         <div className="flex justify-between border-b border-border-gray py-3">
           <div className="flex w-1/5 max-w-[120px] shrink-0 flex-col gap-4">

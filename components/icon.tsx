@@ -17,6 +17,7 @@ import iconLetdownOff from '@/public/icon-letdown-off.svg'
 import iconIndifferentOff from '@/public/icon-indifferent-off.svg'
 import iconGoUp from '@/public/icon-go-up.svg'
 import iconReaction from '@/public/icon-reaction.svg'
+import iconOpen from '@/public/icon-open.svg'
 
 const IconMap = {
   logo,
@@ -36,6 +37,7 @@ const IconMap = {
   'icon-indifferent-off': iconIndifferentOff,
   'icon-go-up': iconGoUp,
   'icon-reaction': iconReaction,
+  'icon-open': iconOpen,
 }
 
 type IconName = keyof typeof IconMap

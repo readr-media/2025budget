@@ -4,6 +4,7 @@ import { BudgetData } from '@/types/budget'
 import { ForwardedRef, forwardRef, useEffect, useState } from 'react'
 import { Reaction } from './random-ten'
 import ReactionButton from './reaction-button'
+import Icon from './icon'
 
 export default function DesktopBudgetTable({
   list,
@@ -72,7 +73,16 @@ const DesktopBudgetRow = forwardRef(
     const [isExpanding, setIsExpanding] = useState(false)
     return (
       <tr className="border-t border-black py-4" ref={ref}>
-        <td className="py-4 align-top text-custom-red">{item.ID}</td>
+        <td className="py-4 align-top text-custom-red">
+          <span>{item.ID}</span>
+          <a
+            className="mt-2 block"
+            href={`/proposal?id=${item.ID}`}
+            target="_blank"
+          >
+            <Icon iconName="icon-open" size={{ width: 20, height: 20 }} />
+          </a>
+        </td>
         <td className="py-4 pr-[28px] align-top">{item.full_name}</td>
         <td className="py-4 pr-[21px] align-top">{item.time_place}</td>
         <td className="py-4 pr-[14px] align-top">{item.who}</td>

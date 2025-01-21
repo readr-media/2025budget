@@ -128,7 +128,7 @@ export default function BudgetList() {
       return list.concat(newFilterdList)
     })
     setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1])
-  }, [currentSubCategory, lastDoc])
+  }, [currentCategory, currentSubCategory, lastDoc])
 
   useEffect(() => {
     if (isIntersecting === null) return

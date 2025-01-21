@@ -10,6 +10,12 @@ export type BudgetData = {
   cost: number
   url: string
   totalReaction: number
+  reaction?: {
+    happy?: number
+    angry?: number
+    letdown?: number
+    indifferent?: number
+  }
 }
 
 export type CategoryItem = {

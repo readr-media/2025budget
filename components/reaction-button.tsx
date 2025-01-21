@@ -7,6 +7,7 @@ import { useUserReactionStore } from '@/lib/store'
 import {
   collection,
   getDocs,
+  increment,
   query,
   updateDoc,
   where,
@@ -101,7 +102,7 @@ const ReactionModal = ({
   )
 }
 
-const handleUpdateUserReaction = async (
+export const handleUpdateUserReaction = async (
   newReaction: Reaction,
   oldReaction: Reaction,
   docId: number
@@ -112,11 +113,9 @@ const handleUpdateUserReaction = async (
   )
   const querySnapshot = await getDocs(q)
   querySnapshot.forEach(async (docSnapshot) => {
-    const oldReactionCount = docSnapshot.data().reaction?.[oldReaction] || 0
-    const newReactionCount = docSnapshot.data().reaction?.[newReaction] || 0
     await updateDoc(docSnapshot.ref, {
-      [`reaction.${oldReaction}`]: oldReactionCount - 1,
-      [`reaction.${newReaction}`]: newReactionCount + 1,
+      [`reaction.${oldReaction}`]: increment(-1),
+      [`reaction.${newReaction}`]: increment(1),
     })
   })
 }

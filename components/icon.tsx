@@ -11,6 +11,10 @@ import iconHappy from '@/public/icon-happy.svg'
 import iconAngry from '@/public/icon-angry.svg'
 import iconLetdown from '@/public/icon-letdown.svg'
 import iconIndifferent from '@/public/icon-indifferent.svg'
+import iconHappyOff from '@/public/icon-happy-off.svg'
+import iconAngryOff from '@/public/icon-angry-off.svg'
+import iconLetdownOff from '@/public/icon-letdown-off.svg'
+import iconIndifferentOff from '@/public/icon-indifferent-off.svg'
 import iconGoUp from '@/public/icon-go-up.svg'
 import iconReaction from '@/public/icon-reaction.svg'
 
@@ -26,6 +30,10 @@ const IconMap = {
   'icon-angry': iconAngry,
   'icon-letdown': iconLetdown,
   'icon-indifferent': iconIndifferent,
+  'icon-happy-off': iconHappyOff,
+  'icon-angry-off': iconAngryOff,
+  'icon-letdown-off': iconLetdownOff,
+  'icon-indifferent-off': iconIndifferentOff,
   'icon-go-up': iconGoUp,
   'icon-reaction': iconReaction,
 }

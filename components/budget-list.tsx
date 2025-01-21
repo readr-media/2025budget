@@ -99,6 +99,7 @@ export default function BudgetList() {
 
     const q = query(
       collection(db, 'project-bucket-2025'),
+      where('category', '==', currentCategory),
       where('full_name', '==', currentSubCategory),
       orderBy('totalReaction', 'desc'),
       orderBy('ID', 'asc'),

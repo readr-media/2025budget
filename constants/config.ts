@@ -1,5 +1,4 @@
 const ENV = process.env.NEXT_PUBLIC_ENV
-const BASE_JSON_URL = process.env.NEXT_PUBLIC_BASE_JSON_URL ?? ''
 const SITE_DOMAIN = process.env.NEXT_PUBLIC_DOMAIN ?? ''
 const SITE_PATH = process.env.NEXT_PUBLIC_GCS_BUCKET_PATH ?? ''
 
@@ -32,7 +31,6 @@ const GA4_ID = ENV === 'prod' ? GA4_IDS.prod : GA4_IDS.dev
 export {
   ENV,
   FIREBASE_CONFIG,
-  BASE_JSON_URL,
   LATEST_NEWS_JSON_URL,
   SITE_TITLE,
   SITE_DESCRIPTION,

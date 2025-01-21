@@ -37,6 +37,7 @@ export {
   SITE_TITLE,
   SITE_DESCRIPTION,
   SITE_URL,
+  SITE_PATH,
   SITE_OG_IMAGE,
   GA4_ID,
 }

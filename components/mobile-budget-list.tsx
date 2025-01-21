@@ -5,7 +5,7 @@ import { Reaction } from './random-ten'
 import ReactionButton from './reaction-button'
 import { useUserReactionStore } from '@/lib/store'
 import Icon from './icon'
-import { SITE_URL } from '@/constants/config'
+import { SITE_PATH } from '@/constants/config'
 
 export default function MobileBudgetList({
   list,
@@ -50,7 +50,7 @@ const MobileBudgetItem = forwardRef(
             <div className="text-sm font-bold">編號</div>
             <div>{item.ID}</div>
           </div>
-          <a href={`${SITE_URL}/proposal?id=${item.ID}`} target="_blank">
+          <a href={`/${SITE_PATH}/proposal?id=${item.ID}`} target="_blank">
             <Icon iconName="icon-open" size={{ width: 20, height: 20 }} />
           </a>
         </div>

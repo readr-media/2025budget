@@ -7,7 +7,7 @@ const withBundlerAnalyzer = require('@next/bundle-analyzer')({
 const nextConfig = {
   assetPrefix:
     process.env.NODE_ENV === 'production'
-      ? `${process.env.DOMAIN}/${process.env.GCS_BUCKET_PATH}`
+      ? `${process.env.NEXT_PUBLIC_DOMAIN}/${process.env.NEXT_PUBLIC_GCS_BUCKET_PATH}`
       : '',
   reactStrictMode: true,
   swcMinify: true,

@@ -5,6 +5,7 @@ import { ForwardedRef, forwardRef, useEffect, useState } from 'react'
 import { Reaction } from './random-ten'
 import ReactionButton from './reaction-button'
 import Icon from './icon'
+import { SITE_URL } from '@/constants/config'
 
 export default function DesktopBudgetTable({
   list,
@@ -77,7 +78,7 @@ const DesktopBudgetRow = forwardRef(
           <span>{item.ID}</span>
           <a
             className="mt-2 block"
-            href={`/proposal?id=${item.ID}`}
+            href={`${SITE_URL}/proposal?id=${item.ID}`}
             target="_blank"
           >
             <Icon iconName="icon-open" size={{ width: 20, height: 20 }} />

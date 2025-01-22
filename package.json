@@ -19,11 +19,13 @@
   "dependencies": {
     "@next/bundle-analyzer": "^14.2.15",
     "@radix-ui/react-dialog": "^1.1.4",
+    "@radix-ui/react-slot": "^1.1.1",
     "@readr-media/share-button": "^1.0.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "firebase": "^11.1.0",
     "lucide-react": "^0.473.0",
+    "meilisearch": "^0.48.2",
     "next": "^14.2.23",
     "react": "^18",
     "react-dom": "^18",

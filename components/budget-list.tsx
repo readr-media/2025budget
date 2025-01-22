@@ -18,7 +18,19 @@ import MobileBudgetList from './mobile-budget-list'
 import BudgetListControl from './budget-list-control'
 import useInView from '@/hooks/use-in-view'
 import Icon from './icon'
-import NextLink from 'next/link'
+import MobileSearchResult from './mobile-search-result'
+import DesktopSearchResult from './desktop-search-result'
+import { useMeiliSearch } from '@/hooks/useMeiliSearch'
+import { Input } from './ui/input'
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from './ui/pagination'
 
 const notoSansTC = Noto_Sans_TC({
   subsets: ['latin'],
@@ -37,6 +49,14 @@ export default function BudgetList() {
   > | null>(null) // For pagination
   const [showGoTop, setShowGoTop] = useState(false)
   const { targetRef, isIntersecting } = useInView()
+  const {
+    searchQuery,
+    setSearchQuery,
+    searchResults,
+    currentPage,
+    setCurrentPage,
+    totalPages,
+  } = useMeiliSearch('budget-2025', '民眾黨')
 
   const categories = useMemo(() => {
     if (!categoryItems.length) return []
@@ -195,15 +215,70 @@ export default function BudgetList() {
           />
           <p className="mt-7 lg:mt-9">
             想隨機看不同提案內容？
-            <NextLink
-              href={'#random-ten'}
-              className="text-custom-blue underline"
-            >
+            <a href={'#random-ten'} className="text-custom-blue underline">
               點我跳轉
-            </NextLink>
+            </a>
           </p>
-          <DesktopBudgetTable list={list} loadMore={fetchNextBudgetList} />
-          <MobileBudgetList list={list} loadMore={fetchNextBudgetList} />
+          <Input
+            className="mt-5 w-full lg:w-1/3"
+            type="text"
+            placeholder="搜尋"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          {searchResults.length > 0 ? (
+            <>
+              <DesktopSearchResult list={searchResults} />
+              <MobileSearchResult list={searchResults} />
+              <Pagination className="relative py-3">
+                <PaginationContent>
+                  <PaginationItem className={currentPage === 1 ? 'hidden' : ''}>
+                    <PaginationPrevious
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault()
+                        setCurrentPage((prev) => Math.max(prev - 1, 1))
+                      }}
+                    />
+                  </PaginationItem>
+                  <PaginationItem className={currentPage === 1 ? 'hidden' : ''}>
+                    <PaginationLink href="#">
+                      {currentPage - 1 === 0 ? null : currentPage - 1}
+                    </PaginationLink>
+                  </PaginationItem>
+                  <PaginationItem>
+                    <PaginationLink href="#" isActive>
+                      {currentPage}
+                    </PaginationLink>
+                  </PaginationItem>
+                  <PaginationItem>
+                    <PaginationLink href="#">
+                      {currentPage + 1 > totalPages ? null : currentPage + 1}
+                    </PaginationLink>
+                  </PaginationItem>
+                  {totalPages > 3 && (
+                    <PaginationItem>
+                      <PaginationEllipsis />
+                    </PaginationItem>
+                  )}
+                  <PaginationItem>
+                    <PaginationNext
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault()
+                        setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                      }}
+                    />
+                  </PaginationItem>
+                </PaginationContent>
+              </Pagination>
+            </>
+          ) : (
+            <>
+              <DesktopBudgetTable list={list} loadMore={fetchNextBudgetList} />
+              <MobileBudgetList list={list} loadMore={fetchNextBudgetList} />
+            </>
+          )}
         </div>
       </section>
       {showGoTop && (

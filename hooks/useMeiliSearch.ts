@@ -26,11 +26,6 @@ export function useMeiliSearch(
   const handleSearch = useCallback(
     async (query: string) => {
       setSearchQuery(query)
-      if (query.trim() === '') {
-        setSearchResults([])
-        setTotalResults(0)
-        return
-      }
       setIsLoading(true)
       const offset = (currentPage - 1) * limit
       try {
@@ -56,6 +51,9 @@ export function useMeiliSearch(
   useEffect(() => {
     if (deferredQuery.trim() !== '') {
       handleSearch(deferredQuery)
+    } else {
+      setSearchResults([])
+      setTotalResults(0)
     }
   }, [handleSearch, deferredQuery])
 

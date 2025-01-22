@@ -4,7 +4,11 @@ import DesktopSearchResult from './desktop-search-result'
 import MobileSearchResult from './mobile-search-result'
 import { useMemo } from 'react'
 
-export default function BudgetListInSearch() {
+export default function BudgetListInSearch({
+  playAgain,
+}: {
+  playAgain: () => void
+}) {
   const {
     searchQuery,
     setSearchQuery,
@@ -35,7 +39,11 @@ export default function BudgetListInSearch() {
       />
       <p className="mt-7 lg:mt-9">
         想隨機看不同提案內容？
-        <a href={'#random-ten'} className="text-custom-blue underline">
+        <a
+          href={'#random-ten'}
+          className="text-custom-blue underline"
+          onClick={playAgain}
+        >
           點我跳轉
         </a>
       </p>

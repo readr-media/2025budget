@@ -18,7 +18,11 @@ import { db } from '@/utils/firebase/app'
 
 const ITEMS_PER_PAGE = 20
 
-export default function BudgetListInCategories() {
+export default function BudgetListInCategories({
+  playAgain,
+}: {
+  playAgain: () => void
+}) {
   const [categoryItems, setCategoryItems] = useState<CategoryItem[]>([])
   const [currentCategory, setCurrentCategory] = useState('')
   const [currentSubCategory, setCurrentSubCategory] = useState('')
@@ -171,7 +175,11 @@ export default function BudgetListInCategories() {
       />
       <p className="mt-7 lg:mt-9">
         想隨機看不同提案內容？
-        <a href={'#random-ten'} className="text-custom-blue underline">
+        <a
+          href={'#random-ten'}
+          className="text-custom-blue underline"
+          onClick={playAgain}
+        >
           點我跳轉
         </a>
       </p>

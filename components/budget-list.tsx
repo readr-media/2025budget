@@ -11,7 +11,7 @@ const notoSansTC = Noto_Sans_TC({
   subsets: ['latin'],
 })
 
-export default function BudgetList() {
+export default function BudgetList({ playAgain }: { playAgain: () => void }) {
   const [showGoTop, setShowGoTop] = useState(false)
   const [viewMode, setViewMode] = useState<BudgetListViewMode>(
     BudgetListViewMode.Category
@@ -40,9 +40,9 @@ export default function BudgetList() {
             onChange={(newViewMode) => setViewMode(newViewMode)}
           />
           {viewMode === BudgetListViewMode.Category ? (
-            <BudgetListInCategories />
+            <BudgetListInCategories playAgain={playAgain} />
           ) : (
-            <BudgetListInSearch />
+            <BudgetListInSearch playAgain={playAgain} />
           )}
         </div>
       </section>

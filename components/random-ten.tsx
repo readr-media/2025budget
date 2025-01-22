@@ -124,7 +124,10 @@ export default function RandomTen() {
             <>
               {viewData?.[progress] ? (
                 <>
-                  <div className="mb-4 flex h-[192px] w-[360px] flex-col items-center overflow-y-scroll rounded-lg border border-black px-9 py-3">
+                  <div
+                    className="mb-4 flex h-[192px] w-[360px] flex-col items-center overflow-y-scroll rounded-lg border border-black px-9 py-3"
+                    key={viewData[progress].ID}
+                  >
                     <p className="pb-[10px] text-base font-bold">
                       {viewData[progress].time_place}，
                       {viewData[progress].result}

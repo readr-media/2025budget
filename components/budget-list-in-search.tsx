@@ -11,6 +11,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from './ui/pagination'
+import { useMemo } from 'react'
 
 export default function BudgetListInSearch() {
   const {
@@ -20,7 +21,14 @@ export default function BudgetListInSearch() {
     currentPage,
     setCurrentPage,
     totalPages,
+    isLoading,
   } = useMeiliSearch('budget-2025', '')
+
+  const hintText = useMemo(() => {
+    if (isLoading) return '搜尋中...'
+    if (!searchQuery) return '請輸入搜尋關鍵字'
+    if (!searchResults.length) return '無搜尋結果，請修改搜尋關鍵字'
+  }, [isLoading, searchQuery, searchResults.length])
 
   return (
     <div className="mt-4 flex w-full grow flex-col items-center lg:mt-10">
@@ -86,7 +94,7 @@ export default function BudgetListInSearch() {
         </>
       ) : (
         <div className="flex grow items-center justify-center font-bold">
-          無搜尋結果，請修改搜尋關鍵字
+          {hintText}
         </div>
       )}
     </div>

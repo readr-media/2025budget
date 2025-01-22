@@ -20,7 +20,7 @@ export default function Landing() {
             href={
               'https://docs.google.com/spreadsheets/d/1LTHdDPmihKQlUggj0PzITA44QGlQGgIUSR8D59hWZPI/edit?gid=1224248748#gid=1224248748'
             }
-            className="text-xs text-text-gray underline"
+            className="text-xs text-text-gray underline lg:text-sm"
           >
             此連結
           </NextLink>

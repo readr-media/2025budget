@@ -14,7 +14,7 @@ const notoSansTC = Noto_Sans_TC({
 export default function BudgetList() {
   const [showGoTop, setShowGoTop] = useState(false)
   const [viewMode, setViewMode] = useState<BudgetListViewMode>(
-    BudgetListViewMode.Search
+    BudgetListViewMode.Category
   )
 
   const { targetRef, isIntersecting } = useInView()

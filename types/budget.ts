@@ -30,3 +30,8 @@ export type News = {
   date_time: string
   content: string
 }
+
+export enum BudgetListViewMode {
+  Category = '依部會分類',
+  Search = '搜尋',
+}

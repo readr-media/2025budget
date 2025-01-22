@@ -1,5 +1,10 @@
 import { Noto_Sans_TC } from 'next/font/google'
-import { BudgetData, CategoryData, CategoryItem } from '@/types/budget'
+import {
+  BudgetData,
+  BudgetListViewMode,
+  CategoryData,
+  CategoryItem,
+} from '@/types/budget'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
   collection,
@@ -31,6 +36,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from './ui/pagination'
+import BudgetListSwitch from './budget-list-switch'
 
 const notoSansTC = Noto_Sans_TC({
   subsets: ['latin'],
@@ -48,6 +54,10 @@ export default function BudgetList() {
     DocumentData
   > | null>(null) // For pagination
   const [showGoTop, setShowGoTop] = useState(false)
+  const [viewMode, setViewMode] = useState<BudgetListViewMode>(
+    BudgetListViewMode.Category
+  )
+
   const { targetRef, isIntersecting } = useInView()
   const {
     searchQuery,
@@ -56,7 +66,7 @@ export default function BudgetList() {
     currentPage,
     setCurrentPage,
     totalPages,
-  } = useMeiliSearch('budget-2025', '民眾黨')
+  } = useMeiliSearch('budget-2025', '')
 
   const categories = useMemo(() => {
     if (!categoryItems.length) return []
@@ -205,28 +215,40 @@ export default function BudgetList() {
           <h2 className="text-xl font-bold">
             這些是目前在立法院預算審議過程中，立委提出的刪減和凍結提案：
           </h2>
-          <BudgetListControl
-            currentCategory={currentCategory}
-            categories={categories}
-            currentSubCategory={currentSubCategory}
-            subCategories={subCategories}
-            onChangeCategory={onChangeCategory}
-            onChangeSubCategory={setCurrentSubCategory}
+          <BudgetListSwitch
+            mode={viewMode}
+            onChange={(newViewMode) => setViewMode(newViewMode)}
           />
+          {viewMode === BudgetListViewMode.Category ? (
+            <BudgetListControl
+              currentCategory={currentCategory}
+              categories={categories}
+              currentSubCategory={currentSubCategory}
+              subCategories={subCategories}
+              onChangeCategory={onChangeCategory}
+              onChangeSubCategory={setCurrentSubCategory}
+            />
+          ) : (
+            <Input
+              className="mt-5 w-full lg:w-1/3"
+              type="text"
+              placeholder="搜尋"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          )}
           <p className="mt-7 lg:mt-9">
             想隨機看不同提案內容？
             <a href={'#random-ten'} className="text-custom-blue underline">
               點我跳轉
             </a>
           </p>
-          <Input
-            className="mt-5 w-full lg:w-1/3"
-            type="text"
-            placeholder="搜尋"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          {searchResults.length > 0 ? (
+          {viewMode === BudgetListViewMode.Category ? (
+            <>
+              <DesktopBudgetTable list={list} loadMore={fetchNextBudgetList} />
+              <MobileBudgetList list={list} loadMore={fetchNextBudgetList} />
+            </>
+          ) : searchResults.length ? (
             <>
               <DesktopSearchResult list={searchResults} />
               <MobileSearchResult list={searchResults} />
@@ -274,10 +296,7 @@ export default function BudgetList() {
               </Pagination>
             </>
           ) : (
-            <>
-              <DesktopBudgetTable list={list} loadMore={fetchNextBudgetList} />
-              <MobileBudgetList list={list} loadMore={fetchNextBudgetList} />
-            </>
+            <div>無搜尋結果</div>
           )}
         </div>
       </section>

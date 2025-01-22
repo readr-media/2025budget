@@ -13,6 +13,7 @@ export default function Landing() {
           <p className="lg:text-base">
             114年中央政府總預算案審查，立委提出哪些刪減和建議？透過「隨機」和「分類」模式一目暸然。
           </p>
+          <br />
           <span className="text-xs text-text-gray lg:text-sm">
             （註：預算案「減列」為刪除；「凍結」為滿足立委提出的條件後可動用；「其他建議」為預算通過的附帶條件，法律名詞為主決議。平台資料來源為立法院議事錄，隨會議進度持續更新中，看資料範疇或詳細使用說明請點
           </span>

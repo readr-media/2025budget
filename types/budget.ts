@@ -7,7 +7,7 @@ export type BudgetData = {
   action: string
   result: string
   content: string
-  cost: number
+  cost: string
   url: string
   totalReaction: number
   reaction?: {

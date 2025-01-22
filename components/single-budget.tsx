@@ -1,3 +1,4 @@
+import { formatCost } from '@/lib/budget-data'
 import { BudgetData } from '@/types/budget'
 
 export default function SingleBudget({
@@ -100,7 +101,7 @@ const MobileBudgetItem = ({ item }: { item: BudgetData }) => {
         </div>
         <div className="flex w-[30%] max-w-[180px] shrink-0 flex-col gap-4">
           <div className="text-sm font-bold">預算金額</div>
-          <div className="pr-[10px]">{item.cost}</div>
+          <div className="pr-[10px]">{formatCost(item.cost)}</div>
         </div>
         <div className="flex w-14 shrink-0 flex-col gap-4">
           <a className="text-sm underline" href={item.url} target="_blank">

@@ -14,7 +14,7 @@ const notoSansTC = Noto_Sans_TC({
 export default function BudgetList() {
   const [showGoTop, setShowGoTop] = useState(false)
   const [viewMode, setViewMode] = useState<BudgetListViewMode>(
-    BudgetListViewMode.Category
+    BudgetListViewMode.Search
   )
 
   const { targetRef, isIntersecting } = useInView()
@@ -28,10 +28,10 @@ export default function BudgetList() {
     <>
       <section
         id="budget-list"
-        className={`${notoSansTC.className} min-h-screen w-full pt-[108px] lg:pt-[125px]`}
+        className={`${notoSansTC.className} flex min-h-screen w-full flex-col pt-[108px] lg:pt-[125px]`}
         ref={targetRef}
       >
-        <div className="mx-auto flex max-w-[500px] flex-col items-center px-[31px] sm:px-0 lg:max-w-[964px]">
+        <div className="mx-auto flex max-w-[500px] grow flex-col items-center px-[31px] sm:px-0 lg:max-w-[964px]">
           <h2 className="text-xl font-bold">
             這些是目前在立法院預算審議過程中，立委提出的刪減和凍結提案：
           </h2>

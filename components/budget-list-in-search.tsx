@@ -23,9 +23,9 @@ export default function BudgetListInSearch() {
   } = useMeiliSearch('budget-2025', '')
 
   return (
-    <>
+    <div className="mt-4 flex w-full grow flex-col items-center lg:mt-10">
       <Input
-        className="mt-5 w-full lg:w-1/3"
+        className="h-7 w-[189px] bg-white text-center"
         type="text"
         placeholder="搜尋"
         value={searchQuery}
@@ -85,8 +85,10 @@ export default function BudgetListInSearch() {
           </Pagination>
         </>
       ) : (
-        <div>無搜尋結果</div>
+        <div className="flex grow items-center justify-center font-bold">
+          無搜尋結果，請修改搜尋關鍵字
+        </div>
       )}
-    </>
+    </div>
   )
 }

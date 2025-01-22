@@ -2,15 +2,6 @@ import { useMeiliSearch } from '@/hooks/useMeiliSearch'
 import { Input } from './ui/input'
 import DesktopSearchResult from './desktop-search-result'
 import MobileSearchResult from './mobile-search-result'
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from './ui/pagination'
 import { useMemo } from 'react'
 
 export default function BudgetListInSearch() {
@@ -18,10 +9,10 @@ export default function BudgetListInSearch() {
     searchQuery,
     setSearchQuery,
     searchResults,
-    currentPage,
     setCurrentPage,
-    totalPages,
+    loadmore,
     isLoading,
+    shouldLoadMore,
   } = useMeiliSearch('budget-2025', '')
 
   const hintText = useMemo(() => {
@@ -37,7 +28,10 @@ export default function BudgetListInSearch() {
         type="text"
         placeholder="搜尋"
         value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
+        onChange={(e) => {
+          setSearchQuery(e.target.value)
+          setCurrentPage(1)
+        }}
       />
       <p className="mt-7 lg:mt-9">
         想隨機看不同提案內容？
@@ -47,50 +41,16 @@ export default function BudgetListInSearch() {
       </p>
       {searchResults.length ? (
         <>
-          <DesktopSearchResult list={searchResults} />
-          <MobileSearchResult list={searchResults} />
-          <Pagination className="relative py-3">
-            <PaginationContent>
-              <PaginationItem className={currentPage === 1 ? 'hidden' : ''}>
-                <PaginationPrevious
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    setCurrentPage((prev) => Math.max(prev - 1, 1))
-                  }}
-                />
-              </PaginationItem>
-              <PaginationItem className={currentPage === 1 ? 'hidden' : ''}>
-                <PaginationLink href="#">
-                  {currentPage - 1 === 0 ? null : currentPage - 1}
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#" isActive>
-                  {currentPage}
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#">
-                  {currentPage + 1 > totalPages ? null : currentPage + 1}
-                </PaginationLink>
-              </PaginationItem>
-              {totalPages > 3 && (
-                <PaginationItem>
-                  <PaginationEllipsis />
-                </PaginationItem>
-              )}
-              <PaginationItem>
-                <PaginationNext
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                  }}
-                />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
+          <DesktopSearchResult
+            list={searchResults}
+            loadMore={loadmore}
+            shouldLoadMore={shouldLoadMore}
+          />
+          <MobileSearchResult
+            list={searchResults}
+            loadMore={loadmore}
+            shouldLoadMore={shouldLoadMore}
+          />
         </>
       ) : (
         <div className="flex grow items-center justify-center font-bold">

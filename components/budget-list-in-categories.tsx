@@ -16,7 +16,7 @@ import {
 } from 'firebase/firestore'
 import { db } from '@/utils/firebase/app'
 
-const ITEMS_PER_PAGE = 10
+const ITEMS_PER_PAGE = 20
 
 export default function BudgetListInCategories() {
   const [categoryItems, setCategoryItems] = useState<CategoryItem[]>([])

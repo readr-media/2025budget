@@ -19,13 +19,12 @@ export function useMeiliSearch(
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [currentPage, setCurrentPage] = useState(1)
-  const [totalResults, setTotalResults] = useState(0)
+  const [totalPages, setTotalPages] = useState(0)
   const deferredQuery = useDeferredValue(searchQuery)
-  const totalPages = Math.ceil(totalResults / limit)
+  const shouldLoadMore = totalPages > 0 && currentPage < totalPages
 
   const handleSearch = useCallback(
     async (query: string) => {
-      setSearchQuery(query)
       setIsLoading(true)
       const offset = (currentPage - 1) * limit
       try {
@@ -34,8 +33,16 @@ export function useMeiliSearch(
           limit,
           offset,
         })
-        setSearchResults(hits as BudgetData[])
-        setTotalResults(estimatedTotalHits)
+        const totalPages = Math.ceil(estimatedTotalHits / limit)
+        if (currentPage === 1) {
+          setSearchResults(hits as BudgetData[])
+        } else {
+          setSearchResults((searchResults) =>
+            searchResults.concat(hits as BudgetData[])
+          )
+        }
+
+        setTotalPages(totalPages)
         setError(null)
       } catch (err) {
         console.error('Error searching Meilisearch:', err)
@@ -48,12 +55,16 @@ export function useMeiliSearch(
     [currentPage, indexName, limit]
   )
 
+  const loadmore = useCallback(() => {
+    setCurrentPage((currentPage) => currentPage + 1)
+  }, [])
+
   useEffect(() => {
     if (deferredQuery.trim() !== '') {
       handleSearch(deferredQuery)
     } else {
       setSearchResults([])
-      setTotalResults(0)
+      setTotalPages(0)
     }
   }, [handleSearch, deferredQuery])
 
@@ -67,5 +78,7 @@ export function useMeiliSearch(
     handleSearch,
     currentPage,
     setCurrentPage,
+    loadmore,
+    shouldLoadMore,
   }
 }

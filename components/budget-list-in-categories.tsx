@@ -3,6 +3,7 @@ import DesktopBudgetTable from './desktop-budget-table'
 import MobileBudgetList from './mobile-budget-list'
 import { BudgetData, CategoryData, CategoryItem } from '@/types/budget'
 import BudgetListControl from './budget-list-control'
+import BudgetVisualization from './budget-visualization'
 import {
   collection,
   DocumentData,
@@ -199,6 +200,7 @@ export default function BudgetListInCategories({
           點我跳轉
         </a>
       </p>
+      <BudgetVisualization list={list} />
       <DesktopBudgetTable list={list} loadMore={fetchNextBudgetList} />
       <MobileBudgetList list={list} loadMore={fetchNextBudgetList} />
     </>

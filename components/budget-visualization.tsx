@@ -161,7 +161,10 @@ export default function BudgetVisualization({ list }: BudgetVisProps) {
 
       {/* Analysis Section */}
       <div>
-        <h3 className="text-sm text-gray-500 mb-6">通過案件分析</h3>
+        <div className="mb-4">
+          <h3 className="text-sm text-gray-500">通過案件分析</h3>
+          <p className="text-xs text-gray-500 mt-1">註：統計資料會隨著頁面捲動更新，請捲動至頁面底部以取得完整統計。</p>
+        </div>
         <div className="grid grid-cols-3 gap-8">
           {Object.entries(stats).map(([action, stat]) => (
             <div key={action} className="relative">

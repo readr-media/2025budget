@@ -24,6 +24,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "firebase": "^11.1.0",
+    "lodash": "^4.17.21",
     "lucide-react": "^0.473.0",
     "meilisearch": "^0.48.2",
     "next": "^14.2.23",
@@ -36,6 +37,7 @@
     "zustand": "^5.0.3"
   },
   "devDependencies": {
+    "@types/lodash": "^4.17.14",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

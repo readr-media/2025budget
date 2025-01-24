@@ -1,12 +1,19 @@
 import { type BudgetData } from '@/types/budget'
 import { MeiliSearch } from 'meilisearch'
-import { useEffect, useState, useCallback, useDeferredValue } from 'react'
-
+import {
+  useEffect,
+  useState,
+  useCallback,
+  useDeferredValue,
+  useMemo,
+} from 'react'
+import { debounce } from 'lodash'
 const client = new MeiliSearch({
   host: 'https://edge.meilisearch.com',
   apiKey: '0d07631b4784739bfd1f1960db8c51f5880084918c4757d7d0bc8ca97b16b538',
 })
 
+const DEBOUNCE_TIME = 500
 export type MeiliSearchResults = Omit<BudgetData, 'totalReaction' | 'reaction'>
 
 export function useMeiliSearch(
@@ -54,19 +61,21 @@ export function useMeiliSearch(
     },
     [currentPage, indexName, limit]
   )
-
+  const debouncedHandleSearch = useMemo(
+    () => debounce(handleSearch, DEBOUNCE_TIME),
+    [handleSearch]
+  )
   const loadmore = useCallback(() => {
     setCurrentPage((currentPage) => currentPage + 1)
   }, [])
-
   useEffect(() => {
     if (deferredQuery.trim() !== '') {
-      handleSearch(deferredQuery)
+      debouncedHandleSearch(deferredQuery)
     } else {
       setSearchResults([])
       setTotalPages(0)
     }
-  }, [handleSearch, deferredQuery])
+  }, [debouncedHandleSearch, deferredQuery])
 
   return {
     searchQuery,

@@ -1,4 +1,5 @@
 import { type BudgetData } from '@/types/budget'
+import _ from 'lodash'
 import { MeiliSearch } from 'meilisearch'
 import { useEffect, useState, useCallback, useDeferredValue } from 'react'
 
@@ -60,11 +61,22 @@ export function useMeiliSearch(
   }, [])
 
   useEffect(() => {
-    if (deferredQuery.trim() !== '') {
-      handleSearch(deferredQuery)
-    } else {
-      setSearchResults([])
-      setTotalPages(0)
+    const debouncedSearch = _.debounce((query: string) => {
+      if (query.trim() !== '') {
+        handleSearch(query)
+      } else {
+        setSearchResults([])
+        setTotalPages(0)
+        setIsLoading(false)
+      }
+    }, 300) // 300ms debounce interval
+
+    setIsLoading(true)
+    debouncedSearch(deferredQuery)
+
+    // Cleanup to prevent memory leaks
+    return () => {
+      debouncedSearch.cancel()
     }
   }, [handleSearch, deferredQuery])
 

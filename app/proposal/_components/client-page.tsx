@@ -41,6 +41,14 @@ export default function ClientPage() {
         url: doc.data().url,
         totalReaction: doc.data().totalReaction,
         reaction: doc.data().reaction,
+        deleted: doc.data().deleted,
+        frozen: doc.data().frozen,
+        item: doc.data().item,
+        item_note: doc.data().item_note,
+        last_cost: doc.data().last_cost,
+        last_budget: doc.data().last_budget,
+        budget_diff: doc.data().budget_diff,
+        budget_url: doc.data().budget_url,
       }))
 
       const budgetItem = list[0]

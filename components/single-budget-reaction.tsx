@@ -55,7 +55,7 @@ export default function SingleBudgetReaction({ item }: { item: BudgetData }) {
   }
 
   return (
-    <div className="mx-auto mt-[60px] flex w-[286px] flex-wrap justify-center gap-x-12 gap-y-5 lg:w-auto">
+    <div className="mx-auto mt-[68px] flex w-[286px] flex-wrap justify-center gap-x-12 gap-y-5 lg:mt-16 lg:w-auto">
       {reactions.map((reactionObj) => (
         <div key={reactionObj.reaction} className="flex flex-col items-center">
           <div className="font-bold">{reactionObj.text}</div>

@@ -200,7 +200,18 @@ export default function BudgetVisualization({ list }: BudgetVisProps) {
       <div>
         <div className="mb-4">
           <h3 className="text-sm text-gray-500">通過案件分析</h3>
-          <p className="text-xs text-gray-500 mt-1">註：統計資料會隨著頁面捲動更新，請捲動至頁面底部以取得完整統計。</p>
+          <div className="text-xs text-gray-500 space-y-1 mt-1">
+            <p>註：統計資料會隨著頁面捲動更新，請捲動至頁面底部以取得完整統計。</p>
+            <p>
+              註：本次預算審查分為「委員會」和「黨團協商」兩個階段。在委員會中被「保留」的案件，
+              可能在黨團協商時以修改後的版本重新提出。這類案件在統計上會被視為兩個不同的提案，
+              因此「通過案件分析」的數字可能會比實際案件數略高。
+            </p>
+            <p>
+              註：在黨團協商階段，各黨團共提出數千件新提案，但最終多數提案在院會前被撤回。
+              本平台僅收錄進入實質審查的約600件提案，因此實際提案總數會高於此處統計。
+            </p>
+          </div>
         </div>
         <div className="grid grid-cols-3 gap-8">
           {Object.entries(stats).map(([action, stat]) => (

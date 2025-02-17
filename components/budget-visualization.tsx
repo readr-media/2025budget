@@ -19,26 +19,47 @@ type ActionStats = {
 }
 
 export default function BudgetVisualization({ list }: BudgetVisProps) {
-  // Filter out items without valid amount and sort by amount
+  // 根據 action 取得正確的金額
+  const getAmount = (item: BudgetData) => {
+    // 檢查 action 是否包含特定動作
+    const hasDeleted = item.action.includes('減列')
+    const hasFrozen = item.action.includes('凍結')
+    
+    // 計算總金額
+    const deletedAmount = hasDeleted ? (parseInt(item.deleted) || 0) : 0
+    const frozenAmount = hasFrozen ? (parseInt(item.frozen) || 0) : 0
+    
+    return deletedAmount + frozenAmount
+  }
+
+  // 如果需要分別取得減列和凍結金額，可以新增輔助函數
+  const getDeletedAmount = (item: BudgetData) => {
+    return item.action.includes('減列') ? (parseInt(item.deleted) || 0) : 0
+  }
+
+  const getFrozenAmount = (item: BudgetData) => {
+    return item.action.includes('凍結') ? (parseInt(item.frozen) || 0) : 0
+  }
+
   const sortedList = useMemo(() => {
     return list
       .filter(item => {
-        const amount = parseInt(item.cost)
-        return !isNaN(amount) && amount > 0
+        const amount = getAmount(item)
+        return amount > 0
       })
       .sort((a, b) => {
-        const amountA = parseInt(a.cost) || 0
-        const amountB = parseInt(b.cost) || 0
+        const amountA = getAmount(a)
+        const amountB = getAmount(b)
         return amountB - amountA
       })
   }, [list])
 
   const maxAmount = useMemo(() => 
-    Math.max(...sortedList.map(item => parseInt(item.cost) || 0)),
+    Math.max(...sortedList.map(item => getAmount(item))),
     [sortedList]
   )
 
-  // Calculate statistics
+  // 修改統計計算
   const stats = useMemo(() => {
     const initialStats = {
       '減列': { total: 0, passed: 0, percentage: 0, totalAmount: 0 },
@@ -46,17 +67,16 @@ export default function BudgetVisualization({ list }: BudgetVisProps) {
       '其他建議': { total: 0, passed: 0, percentage: 0, totalAmount: 0 }
     } as Record<string, ActionStats>
 
-    // Count all cases including those without valid amounts
     list.forEach(item => {
       const action = item.action as keyof typeof ACTION_COLORS
-      const amount = parseInt(item.cost) || 0
+      const amount = getAmount(item)
       
       if (initialStats[action]) {
         initialStats[action].total++
         if (item.result === '通過') {
           initialStats[action].passed++
         }
-        if (!isNaN(amount) && amount > 0) {
+        if (amount > 0) {
           initialStats[action].totalAmount += amount
         }
       }
@@ -70,6 +90,15 @@ export default function BudgetVisualization({ list }: BudgetVisProps) {
 
     return initialStats
   }, [list])
+
+  // 計算實際預算變動
+  const budgetImpact = list.map(item => ({
+    ...item,
+    impact: (item.deleted || 0) + (item.frozen || 0)  // 計算總影響金額
+  }));
+
+  // 依照影響金額排序
+  const sortedData = [...budgetImpact].sort((a, b) => (b.impact - a.impact));
 
   if (!sortedList.length) {
     return null
@@ -92,18 +121,26 @@ export default function BudgetVisualization({ list }: BudgetVisProps) {
   return (
     <div className="w-full max-w-[964px] mt-8 mb-12" role="region" aria-label="預算提案視覺化">
       {/* Top Stats Row */}
-      <div className="grid grid-cols-2 gap-8 mb-12">
+      <div className="grid grid-cols-3 gap-8 mb-12">
         {/* Total Cases Card */}
         <div className="flex flex-col items-start">
           <h3 className="text-sm text-gray-500 mb-1">總案件數</h3>
           <p className="text-4xl font-bold">{totalCases}</p>
         </div>
 
-        {/* Total Amount Card */}
+        {/* Total Deleted Amount Card */}
+        <div className="flex flex-col items-center">
+          <h3 className="text-sm text-gray-500 mb-1">總減列金額</h3>
+          <p className="text-4xl font-bold text-custom-red">
+            {formatAmountToChinese(stats['減列'].totalAmount)}元
+          </p>
+        </div>
+
+        {/* Total Frozen Amount Card */}
         <div className="flex flex-col items-end">
-          <h3 className="text-sm text-gray-500 mb-1">總預算</h3>
-          <p className="text-4xl font-bold">
-            {formatAmountToChinese(totalAmount)}元
+          <h3 className="text-sm text-gray-500 mb-1">總凍結金額</h3>
+          <p className="text-4xl font-bold text-custom-blue">
+            {formatAmountToChinese(stats['凍結'].totalAmount)}元
           </p>
         </div>
       </div>
@@ -125,8 +162,8 @@ export default function BudgetVisualization({ list }: BudgetVisProps) {
         </div>
         
         <div className="space-y-1.5">
-          {sortedList.map(item => {
-            const amount = parseInt(item.cost) || 0
+          {sortedList.map((item, index) => {
+            const amount = getAmount(item)
             const width = maxAmount > 0 ? (amount / maxAmount) * 100 : 0
             const color = ACTION_COLORS[item.action as keyof typeof ACTION_COLORS] || 'bg-text-gray'
             const opacity = item.result === '通過' ? 'opacity-100' : 'opacity-50'
@@ -137,7 +174,7 @@ export default function BudgetVisualization({ list }: BudgetVisProps) {
                 className="relative group flex items-center gap-3"
                 role="button"
                 tabIndex={0}
-                aria-label={`${item.full_name} - ${item.action} - ${item.cost}元`}
+                aria-label={`${item.full_name} - ${item.action} - ${formatAmountToChinese(amount)}元`}
               >
                 <div className="w-16 text-sm text-right flex-shrink-0 text-gray-500 font-mono">
                   {item.ID}
@@ -149,7 +186,7 @@ export default function BudgetVisualization({ list }: BudgetVisProps) {
                   />
                   <div className="absolute left-20 top-0 h-full flex items-center opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 px-2">
                     <span className="text-sm whitespace-nowrap">
-                      {item.full_name} - {item.action} - {item.cost}元
+                      {item.full_name} - {item.action} - {formatAmountToChinese(amount)}元
                     </span>
                   </div>
                 </div>

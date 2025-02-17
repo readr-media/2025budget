@@ -44,3 +44,31 @@ export enum BudgetListViewMode {
   Category = '依部會分類',
   Search = '搜尋',
 }
+
+export interface Budget {
+  ID: number
+  time_place: string
+  category: string
+  full_name: string
+  who: string
+  action: string
+  result: string
+  content: string
+  cost: number
+  deleted?: number
+  frozen?: number
+  item: string
+  item_note: string
+  last_cost: string
+  last_budget: string
+  budget_diff: string
+  budget_url: string
+  url: string
+  totalReaction: number
+  reaction?: {
+    happy?: number
+    angry?: number
+    letdown?: number
+    indifferent?: number
+  }
+}
